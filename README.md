@@ -62,3 +62,9 @@ quad0.B2 = 10
 3. In the project root folder, type `make redeploy` to update the package and execute the command
    (i.e. ``beam_ellipse``) to run the app;
 4. Uninstall the package by: ``pip uninstall <pkg_name>`` (for this case, pkg_name is `aris`).
+
+## Note
+If the command ``beam_ellipse`` cannot be found, you'll have to update ``PATH`` env, i.e.
+```shell
+echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc
+```
