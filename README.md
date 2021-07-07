@@ -1,14 +1,29 @@
 # ARIS-VA-Ellipse
 
-This is a high-level physics application built upon ``phantasy`` framework.
+This is a high-level physics application (HLA) built upon ``phantasy`` framework.
 The EPICS controls environment is provided by ARIS virtual accelerator (VA)
 (pre-separator), the UI skeleton is provided by ``phantasy-ui``, and
 the device controls is provided by ``phantasy``.
 
+This repository keeps the generated project files as the start point of the
+development of a HLA to visualize the beam ellipse drawing with the simulation
+results from FLAME model. This HLA also works with the real machine.
+
 ## Initialize App Skeleton
 
 ```shell
-makeBasePyQtApp --app myApp --template AppWindow
+# the working directory is /tmp
+$ makeBasePyQtApp --app aris-va-ellipse --template AppWindow
+What's the name of this package? (default: mypkg) aris
+What's the name of the app, also the command to run it? (default: myApp) beam_ellipse
+Generating aris-va-ellipse with template AppWindow...
+Successfully made an base app at '/tmp/aris-va-ellipse'.
+What to do next:
+> Install package: cd /tmp/aris-va-ellipse; make deploy
+> Run app by executing beam_ellipse
+> Edit .ui file with 'frib_designer', and the .py files.
+> Update the package: cd /tmp/aris-va-ellipse; make redeploy
+> Happy Coding!
 ```
 
 ## Start ARIS VA
@@ -43,5 +58,7 @@ quad0.B2 = 10
 
 ## Development Workflow
 1. Edit .ui file in ``frib_designer``, which is a command tool from package ``phantasy_ui``;
-2. Convert .ui file to .py file with ``pyuic5``: ``pyuic5 ui_app.ui -o ui_app.py -x``;
-3. Run app by ``python3 app.py``.
+2. Convert .ui files to .py files by executing `make` in the ui folder;
+3. In the project root folder, type `make redeploy` to update the package and execute the command
+   (i.e. ``beam_ellipse``) to run the app;
+4. Uninstall the package by: ``pip uninstall <pkg_name>`` (for this case, pkg_name is `aris`).
