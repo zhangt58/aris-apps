@@ -11,6 +11,9 @@ results from FLAME model. This HLA also works with the real machine.
 
 ## Initialize App Skeleton
 
+Be sure to update the required packages, do ``sudo apt update && sudo apt upgrade`` in the
+Terminal.
+
 ```shell
 # the working directory is /tmp
 $ makeBasePyQtApp --app aris-va-ellipse --template AppWindow
