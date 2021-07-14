@@ -10,4 +10,7 @@ deploy: build
 	python3 -m pip install dist/*.whl --upgrade --user
 
 uninstall:
-	python3 -m pip uninstall aris
+	cd $(HOME) && python3 -m pip uninstall aris -y
+
+run: redeploy
+	beam_ellipse
