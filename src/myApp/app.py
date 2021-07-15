@@ -14,6 +14,7 @@ Show the available templates:
 >>> makeBasePyQtApp -l
 """
 
+from phantasy_apps.allison_scanner.data import draw_beam_ellipse_with_params
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
 
@@ -119,8 +120,20 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.matplotlibbaseWidget.update_figure()
 
     def draw_ellipse(self):
-        raise NotImplementedError
+        #raise NotImplementedError
 
+        """Draw beam ellipse onto the figure area.
+        """
+        ARIS_LAT.sync_settings()
+        _, fm = ARIS_LAT.run()
+        r, s = fm.run(monitor='all')
+        keys = [i.format(u='x') for i in ('{u}_cen', '{u}p_cen', '{u}_rms', '{u}p_rms', 'emit_{u}', 'emitn_{u}','alpha_{u}', 'beta_{u}', 'gamma_{u}', 'total_intensity')]
+        vals = (s.xcen, s.xpcen, s.xrms, s.xprms, s.xemittance, s.xnemittance,
+        s.xtwiss_alpha, s.xtwiss_beta, (s.xtwiss_alpha**2+1)/s.xtwiss_beta, 1)
+        params = dict(zip(keys, vals))
+        self.matplotlibbaseWidget.clear_figure()
+        draw_beam_ellipse_with_params(params, color='b', factor=4, ax=self.matplotlibbaseWidget.axes, xoy='x', fill='g', anote=True)
+        self.matplotlibbaseWidget.update_figure()
 
 if __name__ == "__main__":
     from PyQt5.QtWidgets import QApplication
