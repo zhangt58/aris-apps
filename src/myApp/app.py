@@ -90,7 +90,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         replace with your routine for beam ellipse drawing.
         """
         try:
-            self.draw_ellipse
+            self.draw_ellipse()
         except NotImplementedError:
             self.draw_envelope()
 
