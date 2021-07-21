@@ -90,7 +90,8 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         replace with your routine for beam ellipse drawing.
         """
         try:
-            self.draw_ellipse()
+            self.draw_ellipse_x()
+            self.draw_ellipse_y()
         except NotImplementedError:
             self.draw_envelope()
 
@@ -119,7 +120,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         )
         self.matplotlibbaseWidget.update_figure()
 
-    def draw_ellipse(self):
+    def draw_ellipse_x(self):
         #raise NotImplementedError
 
         """Draw beam ellipse onto the figure area.
@@ -132,8 +133,24 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         s.xtwiss_alpha, s.xtwiss_beta, (s.xtwiss_alpha**2+1)/s.xtwiss_beta, 1)
         params = dict(zip(keys, vals))
         self.matplotlibbaseWidget.clear_figure()
-        draw_beam_ellipse_with_params(params, color='b', factor=4, ax=self.matplotlibbaseWidget.axes, xoy='x', fill='g', anote=True)
+        draw_beam_ellipse_with_params(params, color='b', factor=4, ax=self.matplotlibbaseWidget.axes, xoy='x', fill='g', anote=False)
         self.matplotlibbaseWidget.update_figure()
+
+    def draw_ellipse_y(self):
+        #raise NotImplementedError
+
+        """Draw beam ellipse onto the figure area.
+        """
+        ARIS_LAT.sync_settings()
+        _, fm = ARIS_LAT.run()
+        r, s = fm.run(monitor='all')
+        keys = [i.format(u='y') for i in ('{u}_cen', '{u}p_cen', '{u}_rms', '{u}p_rms', 'emit_{u}', 'emitn_{u}','alpha_{u}', 'beta_{u}', 'gamma_{u}', 'total_intensity')]
+        vals = (s.ycen, s.ypcen, s.yrms, s.yprms, s.yemittance, s.ynemittance,
+        s.ytwiss_alpha, s.ytwiss_beta, (s.ytwiss_alpha**2+1)/s.ytwiss_beta, 1)
+        params = dict(zip(keys, vals))
+        self.matplotlibbaseWidget_1.clear_figure()
+        draw_beam_ellipse_with_params(params, color='b', factor=4, ax=self.matplotlibbaseWidget_1.axes, xoy='y', fill='g', anote=True)
+        self.matplotlibbaseWidget_1.update_figure()
 
 if __name__ == "__main__":
     from PyQt5.QtWidgets import QApplication
