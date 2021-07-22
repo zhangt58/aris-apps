@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1284</width>
-    <height>709</height>
+    <width>1381</width>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,182 +18,197 @@
     <normaloff>:/icons/default.png</normaloff>:/icons/default.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="MatplotlibBaseWidget" name="matplotlibbaseWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>640</width>
-      <height>480</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="figureXlabel">
-     <string>X (mm)</string>
-    </property>
-    <property name="figureYlabel">
-     <string>X' (mrad)</string>
-    </property>
-    <property name="figureXYlabelFont">
-     <font>
-      <family>sans-serif</family>
-      <pointsize>14</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="figureTitleFont">
-     <font>
-      <family>sans-serif</family>
-      <pointsize>16</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="figureXYticksFont">
-     <font>
-      <family>sans-serif</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="figureToolbarToggle" stdset="0">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>480</y>
-      <width>121</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>Select quadrupole</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="quad1_name_cbb">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>480</y>
-      <width>79</width>
-      <height>27</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>480</y>
-      <width>111</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>Gradient Setting</string>
-    </property>
-   </widget>
-   <widget class="QDoubleSpinBox" name="quad1_grad_dsbox">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>480</y>
-      <width>111</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="suffix">
-     <string> T/m</string>
-    </property>
-    <property name="decimals">
-     <number>3</number>
-    </property>
-   </widget>
-   <widget class="MatplotlibBaseWidget" name="matplotlibbaseWidget_1">
-    <property name="geometry">
-     <rect>
-      <x>640</x>
-      <y>0</y>
-      <width>640</width>
-      <height>480</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="figureXlabel">
-     <string>Y (mm)</string>
-    </property>
-    <property name="figureYlabel">
-     <string>Y' (mrad)</string>
-    </property>
-    <property name="figureXYlabelFont">
-     <font>
-      <family>sans-serif</family>
-      <pointsize>14</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="figureTitleFont">
-     <font>
-      <family>sans-serif</family>
-      <pointsize>16</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="figureXYticksFont">
-     <font>
-      <family>sans-serif</family>
-      <pointsize>12</pointsize>
-      <weight>50</weight>
-      <italic>false</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="figureToolbarToggle" stdset="0">
-     <bool>false</bool>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Beam Ellipse</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="MatplotlibBaseWidget" name="x_ellipse_plot">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="figureXlabel">
+           <string>X (mm)</string>
+          </property>
+          <property name="figureYlabel">
+           <string>X' (mrad)</string>
+          </property>
+          <property name="figureTitle">
+           <string/>
+          </property>
+          <property name="figureXYlabelFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>14</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureTitleFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>16</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureXYticksFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>12</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureToolbarToggle" stdset="0">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="MatplotlibBaseWidget" name="y_ellipse_plot">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="figureXlabel">
+           <string>Y (mm)</string>
+          </property>
+          <property name="figureYlabel">
+           <string>Y' (mrad)</string>
+          </property>
+          <property name="figureXYlabelFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>14</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureTitleFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>16</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureXYticksFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>12</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureToolbarToggle" stdset="0">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Beam Envelope</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="MatplotlibCurveWidget" name="envelope_plot">
+          <property name="figureXlabel">
+           <string>s [m]</string>
+          </property>
+          <property name="figureYlabel">
+           <string>Envelop [mm]</string>
+          </property>
+          <property name="figureXYlabelFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>14</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureLegendToggle" stdset="0">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Select quadrupole</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="quad1_name_cbb"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Gradient Setting</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="quad1_grad_dsbox">
+        <property name="suffix">
+         <string> T/m</string>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1284</width>
-     <height>24</height>
+     <width>1381</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -249,6 +264,11 @@
    <class>MatplotlibBaseWidget</class>
    <extends>QWidget</extends>
    <header>mpl4qt.widgets.mplbasewidget</header>
+  </customwidget>
+  <customwidget>
+   <class>MatplotlibCurveWidget</class>
+   <extends>QWidget</extends>
+   <header>mpl4qt.widgets.mplcurvewidget</header>
   </customwidget>
  </customwidgets>
  <resources>
