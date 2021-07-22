@@ -14,9 +14,12 @@ Show the available templates:
 >>> makeBasePyQtApp -l
 """
 
+import sys
+
 from phantasy_apps.allison_scanner.data import draw_beam_ellipse_with_params
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMessageBox
 
 from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
@@ -69,8 +72,15 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """
         self.quad_selected = ARIS_MP.get_elements(name=name)[0]
         self.quad1_grad_dsbox.valueChanged.disconnect()
-        self.quad1_grad_dsbox.setValue(
-            self.quad_selected.current_setting('B2'))
+        try:
+            self.quad1_grad_dsbox.setValue(
+                self.quad_selected.current_setting('B2'))
+        except TypeError:
+            # current_settings('B2') is None --> most likely VA is not running
+            QMessageBox.critical(self, "ARIS Beam Ellipse",
+                    "Cannot reach process variables, please either start virtual accelerator or ensure Channel Access is permittable.", QMessageBox.Ok, QMessageBox.Ok)
+            sys.exit(1)
+
         self.quad1_grad_dsbox.valueChanged.connect(self.on_quad1_grad_changed)
 
     @pyqtSlot(float)
