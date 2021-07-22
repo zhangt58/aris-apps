@@ -91,6 +91,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         o.setLineColor(QColor('#FF0000'))
         o.setLineLabel("$\sigma_y$")
 
+        # update drawing
+        self.quad1_grad_dsbox.valueChanged.emit(self.quad1_grad_dsbox.value())
+
     @pyqtSlot('QString')
     def on_quad1_name_changed(self, name: str) -> None:
         """When the current selected quad name is changed, do:
