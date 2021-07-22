@@ -188,14 +188,19 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
                            anote=False)
 
     def _plot_ellipse(self, figure_obj, params, **kws):
+        xoy = kws.get('xoy', 'x')
+        xlbl = f"{xoy} [mm]"
+        ylbl = f"{xoy}' [mrad]"
         figure_obj.clear_figure()
         draw_beam_ellipse_with_params(params,
                                       ax=figure_obj.axes,
                                       color=kws.get('color', 'b'),
                                       factor=kws.get('factor', 4),
-                                      xoy=kws.get('xoy', 'x'),
+                                      xoy=xoy,
                                       fill=kws.get('fill', 'g'),
                                       anote=kws.get('anote', False))
+        figure_obj.setFigureXlabel(xlbl)
+        figure_obj.setFigureYlabel(ylbl)
         figure_obj.update_figure()
 
 
