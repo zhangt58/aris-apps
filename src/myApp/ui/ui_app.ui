@@ -6,68 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1627</width>
-    <height>611</height>
+    <width>1381</width>
+    <height>641</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../../../default.png</normaloff>../../../../default.png</iconset>
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/default.png</normaloff>:/icons/default.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Select quadrupole</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="quad1_name_cbb"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Gradient Setting</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="quad1_grad_dsbox">
-        <property name="suffix">
-         <string> T/m</string>
-        </property>
-        <property name="decimals">
-         <number>3</number>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
@@ -173,75 +124,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QTableWidget" name="tableWidget">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="autoFillBackground">
-           <bool>false</bool>
-          </property>
-          <property name="showGrid">
-           <bool>true</bool>
-          </property>
-          <property name="sortingEnabled">
-           <bool>false</bool>
-          </property>
-          <row>
-           <property name="text">
-            <string>x(y)_c [mm]</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>a(b)_c [mm]</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>x(y)m [mm]</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>a(b)m [mm]</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>eps_x(y)</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>alpha_x(y)</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>beta_x(y)</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>gamma_x(y)</string>
-           </property>
-          </row>
-          <column>
-           <property name="text">
-            <string>X</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Y</string>
-           </property>
-          </column>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_2">
@@ -275,6 +157,49 @@
       </widget>
      </widget>
     </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Select quadrupole</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="quad1_name_cbb"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Gradient Setting</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="quad1_grad_dsbox">
+        <property name="suffix">
+         <string> T/m</string>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -282,8 +207,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1627</width>
-     <height>24</height>
+     <width>1381</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

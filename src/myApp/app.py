@@ -16,12 +16,10 @@ Show the available templates:
 
 import sys
 
-from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtWidgets import QDialog, QApplication
 
 from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
@@ -45,6 +43,7 @@ TWISS_KEYS_Y = [
                               'gamma_{u}', 'total_intensity')
 ]
 
+
 class MyAppWindow(BaseAppForm, Ui_MainWindow):
     def __init__(self, version, **kws):
         super(self.__class__, self).__init__()
@@ -54,7 +53,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.setAppTitle("My App")
 
         # app info in about dialog
-        self.app_about_info = "This application will display the X/Y beam ellipse, beam envelope, and associated values of the virtual accelerator. A figure describing the beam ellipse is included here."
+        # self.app_about_info = "About info of My App."
 
         # UI
         self.setupUi(self)
@@ -172,26 +171,6 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
                   (s.ytwiss_alpha**2 + 1) / s.ytwiss_beta, 1)
         params_x = dict(zip(TWISS_KEYS_X, vals_x))
         params_y = dict(zip(TWISS_KEYS_Y, vals_y))
-
-        #Fill table widget with constant values
-        #table is coded as one column even though two exist in QTDesigner GUI
-        #Only accepts String type (Table View widget could fix this)
-        self.tableWidget.setItem(0,0,QtWidgets.QTableWidgetItem(str(s.xcen)))#x_c
-        self.tableWidget.setItem(0,1,QtWidgets.QTableWidgetItem(str(s.ycen)))#y_c
-        self.tableWidget.setItem(0,2,QtWidgets.QTableWidgetItem(str(s.xpcen)))#a_c
-        self.tableWidget.setItem(0,3,QtWidgets.QTableWidgetItem(str(s.ypcen)))#b_c
-        self.tableWidget.setItem(0,4,QtWidgets.QTableWidgetItem(str(s.xrms)))#xm
-        self.tableWidget.setItem(0,5,QtWidgets.QTableWidgetItem(str(s.yrms)))#ym
-        self.tableWidget.setItem(0,6,QtWidgets.QTableWidgetItem(str(s.xprms)))#am
-        self.tableWidget.setItem(0,7,QtWidgets.QTableWidgetItem(str(s.yprms)))#bm
-        self.tableWidget.setItem(0,8,QtWidgets.QTableWidgetItem(str(s.xemittance)))#eps_x
-        self.tableWidget.setItem(0,9,QtWidgets.QTableWidgetItem(str(s.yemittance)))#eps_y
-        self.tableWidget.setItem(0,10,QtWidgets.QTableWidgetItem(str(s.xtwiss_alpha)))#x-alpha
-        self.tableWidget.setItem(0,11,QtWidgets.QTableWidgetItem(str(s.ytwiss_alpha)))#y-alpha
-        self.tableWidget.setItem(0,12,QtWidgets.QTableWidgetItem(str(s.xtwiss_beta)))#x-beta
-        self.tableWidget.setItem(0,13,QtWidgets.QTableWidgetItem(str(s.ytwiss_beta)))#y-beta
-        self.tableWidget.setItem(0,14,QtWidgets.QTableWidgetItem(str((s.xtwiss_alpha**2 + 1) / s.xtwiss_beta)))#x-gamma
-        self.tableWidget.setItem(0,15,QtWidgets.QTableWidgetItem(str((s.ytwiss_alpha**2 + 1) / s.ytwiss_beta))) #y-gamma
 
         self._plot_ellipse(self.x_ellipse_plot,
                            params_x,
