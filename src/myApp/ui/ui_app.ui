@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1341</width>
-    <height>687</height>
+    <width>1653</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -256,6 +256,60 @@
       </widget>
      </widget>
     </item>
+    <item row="0" column="1">
+     <widget class="QTableWidget" name="tableWidget">
+      <row>
+       <property name="text">
+        <string>x(y)_c [mm]</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>a(b)_c [mm]</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>x(y)m [mm]</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>a(b)m [mm]</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>eps_x(y)</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>alpha_x(y)</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>beta_x(y)</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>gamma_x(y)</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>X</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </column>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -263,8 +317,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1341</width>
-     <height>30</height>
+     <width>1653</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
