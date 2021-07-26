@@ -128,9 +128,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         1. print the setting of selected quad
         2. update drawing with online simulated results
         """
-        q = self.quad_selected.name
-        print(f"'{q}' setting is: {grad} T/m")
-
+        self.quad_selected.B2 = grad
         # update simulation
         ARIS_LAT.sync_settings()
         _, fm = ARIS_LAT.run()
