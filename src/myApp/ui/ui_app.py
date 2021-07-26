@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_app.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,10 +12,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1341, 687)
+        MainWindow.resize(1653, 650)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/default.png"),
-                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(
+            QtGui.QPixmap(":/icons/default.png"), QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -176,9 +177,34 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.envelope_plot)
         self.tabWidget.addTab(self.tab_2, "")
         self.gridLayout.addWidget(self.tabWidget, 0, 0, 1, 1)
+        self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
+        self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setRowCount(8)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(5, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setVerticalHeaderItem(7, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(1, item)
+        self.gridLayout.addWidget(self.tableWidget, 0, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1341, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1653, 24))
         self.menubar.setObjectName("menubar")
         self.menu_File = QtWidgets.QMenu(self.menubar)
         self.menu_File.setObjectName("menu_File")
@@ -221,13 +247,35 @@ class Ui_MainWindow(object):
         self.y_ellipse_plot.setFigureXlabel(_translate("MainWindow", "Y (mm)"))
         self.y_ellipse_plot.setFigureYlabel(
             _translate("MainWindow", "Y\' (mrad)"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),
-                                  _translate("MainWindow", "Beam Ellipse"))
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab),
+            _translate("MainWindow", "Beam Ellipse"))
         self.envelope_plot.setFigureXlabel(_translate("MainWindow", "s [m]"))
         self.envelope_plot.setFigureYlabel(
             _translate("MainWindow", "Envelop [mm]"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2),
-                                  _translate("MainWindow", "Beam Envelope"))
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_2),
+            _translate("MainWindow", "Beam Envelope"))
+        item = self.tableWidget.verticalHeaderItem(0)
+        item.setText(_translate("MainWindow", "x(y)_c [mm]"))
+        item = self.tableWidget.verticalHeaderItem(1)
+        item.setText(_translate("MainWindow", "a(b)_c [mm]"))
+        item = self.tableWidget.verticalHeaderItem(2)
+        item.setText(_translate("MainWindow", "x(y)m [mm]"))
+        item = self.tableWidget.verticalHeaderItem(3)
+        item.setText(_translate("MainWindow", "a(b)m [mm]"))
+        item = self.tableWidget.verticalHeaderItem(4)
+        item.setText(_translate("MainWindow", "eps_x(y)"))
+        item = self.tableWidget.verticalHeaderItem(5)
+        item.setText(_translate("MainWindow", "alpha_x(y)"))
+        item = self.tableWidget.verticalHeaderItem(6)
+        item.setText(_translate("MainWindow", "beta_x(y)"))
+        item = self.tableWidget.verticalHeaderItem(7)
+        item.setText(_translate("MainWindow", "gamma_x(y)"))
+        item = self.tableWidget.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "X"))
+        item = self.tableWidget.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "Y"))
         self.menu_File.setTitle(_translate("MainWindow", "&File"))
         self.menu_Help.setTitle(_translate("MainWindow", "&Help"))
         self.action_About.setText(_translate("MainWindow", "&About"))
