@@ -23,6 +23,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
+from phantasy_ui.widgets import ElementWidget
 from phantasy_apps.allison_scanner.data import draw_beam_ellipse_with_params
 
 from .ui.ui_app import Ui_MainWindow
@@ -65,6 +66,15 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
     def _post_init(self):
         """Initialize UI, user customized code put here.
         """
+        # initial vars for FLAME model
+        self.results = None
+        self.last_bs = None
+        self.fm = None
+
+        # ElementWidget for selected quad and target element
+        self._quad_widget = None
+        self._elem_widget = None
+
         # Fill comboBox quad1_name_cbb with all quad names.
         quad_name_list = [i.name for i in ARIS_MP.get_elements(type='QUAD')]
         self.quad1_name_cbb.addItems(quad_name_list)
@@ -75,11 +85,6 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.quad1_grad_dsbox.valueChanged.connect(self.on_quad1_grad_changed)
         # initialize quad1_name_cbb
         self.quad1_name_cbb.currentTextChanged.emit(quad_name_list[0])
-
-        # initial vars for FLAME model
-        self.results = None
-        self.last_bs = None
-        self.fm = None
 
         # initial elemlist_cbb
         self.init_elemlist()
@@ -100,6 +105,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.elemlist_cbb.setCurrentIndex(self.elemlist_cbb.count() - 1)
         self.elemlist_cbb.currentTextChanged.emit(self.elemlist_cbb.currentText())
 
+        # element query
+        self.quad_info_btn.clicked.connect(self.on_query_quad_info)
+        self.elem_info_btn.clicked.connect(self.on_query_elem_info)
+
     @pyqtSlot('QString')
     def on_quad1_name_changed(self, name: str) -> None:
         """When the current selected quad name is changed, do:
@@ -108,6 +117,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         reconnect, to avoid unnecessary trigging.
         """
         self.quad_selected = ARIS_MP.get_elements(name=name)[0]
+        self._quad_widget = ElementWidget(self.quad_selected)
         self.quad1_grad_dsbox.valueChanged.disconnect()
         try:
             self.quad1_grad_dsbox.setValue(
@@ -227,6 +237,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """Get beam state result after the selected element from FLAME model.
         """
         elem = ARIS_LAT[ename]
+        self._elem_widget = ElementWidget(elem)
         self.family_lineEdit.setText(elem.family)
         self.pos_lineEdit.setText(f"{elem.sb:.3f} m")
         r, _ = self.fm.run(monitor=[ename])
@@ -237,6 +248,24 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
             return
         self.last_bs = r[0][-1]
         self.draw_ellipse()
+
+    @pyqtSlot()
+    def on_query_quad_info(self):
+        """Pop up dialog for selected quad for info query.
+        """
+        if self._quad_widget is None:
+            return
+        self._quad_widget.show()
+        self._quad_widget.raise_()
+
+    @pyqtSlot()
+    def on_query_elem_info(self):
+        """Pop up dialog for selected element for info query.
+        """
+        if self._elem_widget is None:
+            return
+        self._elem_widget.show()
+        self._elem_widget.raise_()
 
 
 if __name__ == "__main__":
