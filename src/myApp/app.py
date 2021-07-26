@@ -81,6 +81,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.last_bs = None
         self.fm = None
 
+        # initial elemlist_cbb
+        self.init_elemlist()
+
         # envelope curves
         o = self.envelope_plot
         o.add_curve()
@@ -90,6 +93,12 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         o.setLineID(1)  # Y
         o.setLineColor(QColor('#FF0000'))
         o.setLineLabel("$\sigma_y$")
+
+        # update drawing
+        self.quad1_grad_dsbox.valueChanged.emit(self.quad1_grad_dsbox.value())
+        # reset current selected element with the last element
+        self.elemlist_cbb.setCurrentIndex(self.elemlist_cbb.count() - 1)
+        self.elemlist_cbb.currentTextChanged.emit(self.elemlist_cbb.currentText())
 
     @pyqtSlot('QString')
     def on_quad1_name_changed(self, name: str) -> None:
@@ -125,8 +134,11 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # update simulation
         ARIS_LAT.sync_settings()
         _, fm = ARIS_LAT.run()
-        self.results, self.last_bs = fm.run(monitor='all')
         self.fm = fm
+        self.results, _ = fm.run(monitor='all')
+        r, _ = fm.run(monitor=[self.elemlist_cbb.currentText()])
+        if r != []:
+            self.last_bs = r[0][-1]
 
         # update drawing
         self.update_drawing()
@@ -188,15 +200,45 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
                            anote=False)
 
     def _plot_ellipse(self, figure_obj, params, **kws):
+        xoy = kws.get('xoy', 'x')
+        xlbl = f"{xoy} [mm]"
+        ylbl = f"{xoy}' [mrad]"
         figure_obj.clear_figure()
         draw_beam_ellipse_with_params(params,
                                       ax=figure_obj.axes,
                                       color=kws.get('color', 'b'),
                                       factor=kws.get('factor', 4),
-                                      xoy=kws.get('xoy', 'x'),
+                                      xoy=xoy,
                                       fill=kws.get('fill', 'g'),
                                       anote=kws.get('anote', False))
+        figure_obj.setFigureXlabel(xlbl)
+        figure_obj.setFigureYlabel(ylbl)
         figure_obj.update_figure()
+
+    def init_elemlist(self):
+        #
+        # this should be called after machine/segment is changed
+        # now only work with ARIS/F1, todo in the future with LatticeWidget
+        #
+        ename_list = [i.name for i in ARIS_LAT]
+        self.elemlist_cbb.addItems(ename_list)
+        self.elemlist_cbb.currentTextChanged.connect(self.on_target_element_changed)
+
+    @pyqtSlot('QString')
+    def on_target_element_changed(self, ename: str):
+        """Get beam state result after the selected element from FLAME model.
+        """
+        elem = ARIS_LAT[ename]
+        self.family_lineEdit.setText(elem.family)
+        self.pos_lineEdit.setText(f"{elem.sb:.3f} m")
+        r, _ = self.fm.run(monitor=[ename])
+        if r == []:
+            QMessageBox.warning(self, "Select Element",
+                    "Selected element cannot be located in model, probably for splitable element, select the closest one.",
+                    QMessageBox.Ok, QMessageBox.Ok)
+            return
+        self.last_bs = r[0][-1]
+        self.draw_ellipse()
 
 
 if __name__ == "__main__":
