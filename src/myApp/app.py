@@ -222,6 +222,12 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
                            xoy='y',
                            fill='m',
                            anote=False)
+        #
+        params = {k: v for k, v in params_x.items()}
+        params.update(params_y)
+        data = [(k, v, '-') for k, v in params.items()]
+        self._show_results(data)
+
 
     def _plot_ellipse(self, figure_obj, params, **kws):
         xoy = kws.get('xoy', 'x')
@@ -269,6 +275,11 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
             return
         self.last_bs = r[0][-1]
         self.draw_ellipse()
+
+    def _show_results(self, data):
+        from .utils import ResultsModel
+        m = ResultsModel(self.twiss_results_treeView, data)
+        m.set_model()
 
     @pyqtSlot()
     def on_query_quad_info(self):
