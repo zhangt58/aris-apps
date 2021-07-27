@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1337</width>
-    <height>692</height>
+    <width>1429</width>
+    <height>861</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,8 +28,8 @@
        <attribute name="title">
         <string>Beam Ellipse</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QLabel" name="label_3">
@@ -92,100 +92,210 @@
           </item>
          </layout>
         </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="MatplotlibBaseWidget" name="x_ellipse_plot">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="figureXlabel">
-             <string>X (mm)</string>
-            </property>
-            <property name="figureYlabel">
-             <string>X' (mrad)</string>
-            </property>
-            <property name="figureTitle">
-             <string/>
-            </property>
-            <property name="figureXYlabelFont">
-             <font>
-              <family>sans-serif</family>
-              <pointsize>14</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="figureTitleFont">
-             <font>
-              <family>sans-serif</family>
-              <pointsize>16</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="figureXYticksFont">
-             <font>
-              <family>sans-serif</family>
-              <pointsize>12</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="figureToolbarToggle" stdset="0">
-             <bool>false</bool>
+        <item row="1" column="0">
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="ellipse_area">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1379</width>
+             <height>571</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="MatplotlibBaseWidget" name="x_ellipse_plot">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="figureXlabel">
+               <string>X (mm)</string>
+              </property>
+              <property name="figureYlabel">
+               <string>X' (mrad)</string>
+              </property>
+              <property name="figureTitle">
+               <string/>
+              </property>
+              <property name="figureXYlabelFont">
+               <font>
+                <family>sans-serif</family>
+                <pointsize>14</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="figureTitleFont">
+               <font>
+                <family>sans-serif</family>
+                <pointsize>16</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="figureXYticksFont">
+               <font>
+                <family>sans-serif</family>
+                <pointsize>12</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="figureToolbarToggle" stdset="0">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="MatplotlibBaseWidget" name="y_ellipse_plot">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="figureXlabel">
+               <string>Y (mm)</string>
+              </property>
+              <property name="figureYlabel">
+               <string>Y' (mrad)</string>
+              </property>
+              <property name="figureXYlabelFont">
+               <font>
+                <family>sans-serif</family>
+                <pointsize>14</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="figureTitleFont">
+               <font>
+                <family>sans-serif</family>
+                <pointsize>16</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="figureXYticksFont">
+               <font>
+                <family>sans-serif</family>
+                <pointsize>12</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="figureToolbarToggle" stdset="0">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <layout class="QGridLayout" name="figure_ctls_gbox">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="grid_on_chkbox">
+            <property name="text">
+             <string>Grid</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="MatplotlibBaseWidget" name="y_ellipse_plot">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+          <item row="0" column="3">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>To</string>
             </property>
-            <property name="figureXlabel">
-             <string>Y (mm)</string>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Y Limit:</string>
             </property>
-            <property name="figureYlabel">
-             <string>Y' (mrad)</string>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="mticks_on_chkbox">
+            <property name="text">
+             <string>Minor Ticks</string>
             </property>
-            <property name="figureXYlabelFont">
-             <font>
-              <family>sans-serif</family>
-              <pointsize>14</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-             </font>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>X Limit:</string>
             </property>
-            <property name="figureTitleFont">
-             <font>
-              <family>sans-serif</family>
-              <pointsize>16</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-             </font>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>From</string>
             </property>
-            <property name="figureXYticksFont">
-             <font>
-              <family>sans-serif</family>
-              <pointsize>12</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-             </font>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="tight_layout_on_chkbox">
+            <property name="text">
+             <string>Compact</string>
             </property>
-            <property name="figureToolbarToggle" stdset="0">
-             <bool>false</bool>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QLineEdit" name="xlim_x2_lineEdit">
+            <property name="text">
+             <string>1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="7">
+           <widget class="QLineEdit" name="ylim_y1_lineEdit">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLineEdit" name="xlim_x1_lineEdit">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="9">
+           <widget class="QLineEdit" name="ylim_y2_lineEdit">
+            <property name="text">
+             <string>1</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="6">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>From</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="8">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>To</string>
             </property>
            </widget>
           </item>
@@ -334,7 +444,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1337</width>
+     <width>1429</width>
      <height>30</height>
     </rect>
    </property>
