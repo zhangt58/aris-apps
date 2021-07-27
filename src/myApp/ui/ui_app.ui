@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1429</width>
-    <height>861</height>
+    <width>1734</width>
+    <height>913</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -102,104 +102,116 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1379</width>
-             <height>571</height>
+             <width>1684</width>
+             <height>623</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_2">
             <item row="0" column="0">
-             <widget class="MatplotlibBaseWidget" name="x_ellipse_plot">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <widget class="QSplitter" name="splitter">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
-              <property name="figureXlabel">
-               <string>X (mm)</string>
-              </property>
-              <property name="figureYlabel">
-               <string>X' (mrad)</string>
-              </property>
-              <property name="figureTitle">
-               <string/>
-              </property>
-              <property name="figureXYlabelFont">
-               <font>
-                <family>sans-serif</family>
-                <pointsize>14</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="figureTitleFont">
-               <font>
-                <family>sans-serif</family>
-                <pointsize>16</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="figureXYticksFont">
-               <font>
-                <family>sans-serif</family>
-                <pointsize>12</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="figureToolbarToggle" stdset="0">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="MatplotlibBaseWidget" name="y_ellipse_plot">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="figureXlabel">
-               <string>Y (mm)</string>
-              </property>
-              <property name="figureYlabel">
-               <string>Y' (mrad)</string>
-              </property>
-              <property name="figureXYlabelFont">
-               <font>
-                <family>sans-serif</family>
-                <pointsize>14</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="figureTitleFont">
-               <font>
-                <family>sans-serif</family>
-                <pointsize>16</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="figureXYticksFont">
-               <font>
-                <family>sans-serif</family>
-                <pointsize>12</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="figureToolbarToggle" stdset="0">
-               <bool>false</bool>
-              </property>
+              <widget class="QWidget" name="">
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="MatplotlibBaseWidget" name="x_ellipse_plot">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="figureXlabel">
+                   <string>X (mm)</string>
+                  </property>
+                  <property name="figureYlabel">
+                   <string>X' (mrad)</string>
+                  </property>
+                  <property name="figureTitle">
+                   <string/>
+                  </property>
+                  <property name="figureXYlabelFont">
+                   <font>
+                    <family>sans-serif</family>
+                    <pointsize>14</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="figureTitleFont">
+                   <font>
+                    <family>sans-serif</family>
+                    <pointsize>16</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="figureXYticksFont">
+                   <font>
+                    <family>sans-serif</family>
+                    <pointsize>12</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="figureToolbarToggle" stdset="0">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="MatplotlibBaseWidget" name="y_ellipse_plot">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="figureXlabel">
+                   <string>Y (mm)</string>
+                  </property>
+                  <property name="figureYlabel">
+                   <string>Y' (mrad)</string>
+                  </property>
+                  <property name="figureXYlabelFont">
+                   <font>
+                    <family>sans-serif</family>
+                    <pointsize>14</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="figureTitleFont">
+                   <font>
+                    <family>sans-serif</family>
+                    <pointsize>16</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="figureXYticksFont">
+                   <font>
+                    <family>sans-serif</family>
+                    <pointsize>12</pointsize>
+                    <weight>50</weight>
+                    <italic>false</italic>
+                    <bold>false</bold>
+                   </font>
+                  </property>
+                  <property name="figureToolbarToggle" stdset="0">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QTreeView" name="twiss_results_treeView"/>
              </widget>
             </item>
            </layout>
@@ -444,7 +456,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1429</width>
+     <width>1734</width>
      <height>30</height>
     </rect>
    </property>
