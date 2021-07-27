@@ -18,8 +18,11 @@ import sys
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QDoubleValidator
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
+
+from mpl4qt.widgets import MatplotlibBaseWidget
 
 from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
@@ -98,6 +101,19 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         o.setLineID(1)  # Y
         o.setLineColor(QColor('#FF0000'))
         o.setLineLabel("$\sigma_y$")
+
+        # ellipse drawing figure configuration
+        for o in (self.xlim_x1_lineEdit, self.xlim_x2_lineEdit, ):
+            o.setValidator(QDoubleValidator())
+            o.textChanged.connect(self.on_xlimit_changed)
+
+        for o in (self.ylim_y1_lineEdit, self.ylim_y2_lineEdit, ):
+            o.setValidator(QDoubleValidator())
+            o.textChanged.connect(self.on_ylimit_changed)
+
+        self.grid_on_chkbox.toggled.connect(self.on_grid_enabled)
+        self.mticks_on_chkbox.toggled.connect(self.on_mticks_enabled)
+        self.tight_layout_on_chkbox.toggled.connect(self.on_tightlayout_enabled)
 
         # update drawing
         self.quad1_grad_dsbox.valueChanged.emit(self.quad1_grad_dsbox.value())
@@ -222,6 +238,11 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         figure_obj.setFigureXlabel(xlbl)
         figure_obj.setFigureYlabel(ylbl)
         figure_obj.update_figure()
+        self.on_xlimit_changed('')
+        self.on_ylimit_changed('')
+        self.grid_on_chkbox.toggled.emit(self.grid_on_chkbox.isChecked())
+        self.mticks_on_chkbox.toggled.emit(self.mticks_on_chkbox.isChecked())
+        self.tight_layout_on_chkbox.toggled.emit(self.tight_layout_on_chkbox.isChecked())
 
     def init_elemlist(self):
         #
@@ -266,6 +287,47 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
             return
         self._elem_widget.show()
         self._elem_widget.raise_()
+
+    @pyqtSlot('QString')
+    def on_xlimit_changed(self, s):
+        """xlimit to be updated.
+        """
+        try:
+            x1 = float(self.xlim_x1_lineEdit.text())
+            x2 = float(self.xlim_x2_lineEdit.text())
+        except ValueError:
+            pass
+        else:
+            for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
+                o.set_xlimit(x1, x2)
+
+    @pyqtSlot('QString')
+    def on_ylimit_changed(self, s):
+        """ylimit to be updated.
+        """
+        try:
+            y1 = float(self.ylim_y1_lineEdit.text())
+            y2 = float(self.ylim_y2_lineEdit.text())
+        except ValueError:
+            pass
+        else:
+            for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
+                o.set_ylimit(y1, y2)
+
+    @pyqtSlot(bool)
+    def on_grid_enabled(self, enabled):
+        for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
+            o.setFigureGridToggle(enabled)
+
+    @pyqtSlot(bool)
+    def on_mticks_enabled(self, enabled):
+        for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
+            o.setFigureMTicksToggle(enabled)
+
+    @pyqtSlot(bool)
+    def on_tightlayout_enabled(self, enabled):
+        for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
+            o.setTightLayoutToggle(enabled)
 
 
 if __name__ == "__main__":
