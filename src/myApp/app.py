@@ -125,6 +125,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.quad_info_btn.clicked.connect(self.on_query_quad_info)
         self.elem_info_btn.clicked.connect(self.on_query_elem_info)
 
+        # auto xyscale
+        self.on_auto_xlim()
+        self.on_auto_ylim()
+
     @pyqtSlot('QString')
     def on_quad1_name_changed(self, name: str) -> None:
         """When the current selected quad name is changed, do:
@@ -339,6 +343,37 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
     def on_tightlayout_enabled(self, enabled):
         for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
             o.setTightLayoutToggle(enabled)
+
+    @pyqtSlot()
+    def on_auto_xlim(self):
+        """Auto set xlimit.
+        """
+        x0, x1 = 0, 1
+        for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
+            o.set_autoscale()
+            x0_, x1_ = o.axes.get_xlim()
+            if x0_ < x0:
+                x0 = x0_
+            if x1_ > x1:
+                x1 = x1_
+        self.xlim_x1_lineEdit.setText(f'{x0:.1f}')
+        self.xlim_x2_lineEdit.setText(f'{x1:.1f}')
+
+    @pyqtSlot()
+    def on_auto_ylim(self):
+        """Auto set ylimit.
+        """
+        y0, y1 = 0, 1
+        for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
+            o.set_autoscale()
+            y0_, y1_ = o.axes.get_ylim()
+            if y0_ < y0:
+                y0 = y0_
+            if y1_ > y1:
+                y1 = y1_
+        self.ylim_y1_lineEdit.setText(f'{y0:.1f}')
+        self.ylim_y2_lineEdit.setText(f'{y1:.1f}')
+
 
 
 if __name__ == "__main__":
