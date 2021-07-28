@@ -100,15 +100,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # initial elemlist_cbb
         self.init_elemlist()
 
-        # envelope curves
-        o = self.envelope_plot
-        o.add_curve()
-        o.setLineID(0)  # X
-        o.setLineColor(QColor('#0000FF'))
-        o.setLineLabel("$\sigma_x$")
-        o.setLineID(1)  # Y
-        o.setLineColor(QColor('#FF0000'))
-        o.setLineLabel("$\sigma_y$")
+        # envelope and trajectory
+        self.__init_envelope_plot()
+        self.__init_trajectory_plot()
 
         # ellipse drawing figure configuration
         for o in (self.xlim_x1_lineEdit, self.xlim_x2_lineEdit, ):
@@ -136,6 +130,30 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # auto xyscale (ellipse drawing)
         self.on_auto_xlim()
         self.on_auto_ylim()
+
+    def __init_envelope_plot(self):
+        """Initialize plot area for beam envelope.
+        """
+        o = self.envelope_plot
+        o.add_curve()
+        o.setLineID(0)  # X
+        o.setLineColor(QColor('#0000FF'))
+        o.setLineLabel("$\sigma_x$")
+        o.setLineID(1)  # Y
+        o.setLineColor(QColor('#FF0000'))
+        o.setLineLabel("$\sigma_y$")
+
+    def __init_trajectory_plot(self):
+        """Initialize plot area for beam trajectory.
+        """
+        o = self.trajectory_plot
+        o.add_curve()
+        o.setLineID(0)  # X
+        o.setLineColor(QColor('#0000FF'))
+        o.setLineLabel("$x_0$")
+        o.setLineID(1)  # Y
+        o.setLineColor(QColor('#FF0000'))
+        o.setLineLabel("$y_0$")
 
     @pyqtSlot('QString')
     def on_quad1_name_changed(self, name: str) -> None:
@@ -185,26 +203,31 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         Here I'm drawing the beam envelop along the entire beamline, try to
         replace with your routine for beam ellipse drawing.
         """
-        self.draw_envelope()
         self.draw_ellipse()
+        self.draw_envelope()
+        self.draw_trajectory()
 
     def draw_envelope(self):
         """Draw beam envelop onto the figure area.
         """
-        results_dict = self.fm.collect_data(self.results, 'pos', 'xrms',
-                                            'yrms')
+        results_dict = self.fm.collect_data(self.results, 'pos', 'xrms', 'yrms')
         pos = results_dict['pos']
         xrms = results_dict['xrms']
         yrms = results_dict['yrms']
-        # update drawing
-        # Note: matplotlibbaseWidget is used here for generic drawing,
-        # for curve visualization, matplotlibCurveWidget is a better choice.
-        # x
-        self.envelope_plot.setLineID(0)
-        self.envelope_plot.update_curve(pos, xrms)
-        # y
-        self.envelope_plot.setLineID(1)
-        self.envelope_plot.update_curve(pos, yrms)
+        for line_id, urms in zip((0, 1), (xrms, yrms)):
+            self.envelope_plot.setLineID(line_id)
+            self.envelope_plot.update_curve(pos, urms)
+
+    def draw_trajectory(self):
+        """Draw beam centroid trajectory onto the figure area.
+        """
+        results_dict = self.fm.collect_data(self.results, 'pos', 'xcen', 'ycen')
+        pos = results_dict['pos']
+        xcen = results_dict['xcen']
+        ycen = results_dict['ycen']
+        for line_id, ucen in zip((0, 1), (xcen, ycen)):
+            self.trajectory_plot.setLineID(line_id)
+            self.trajectory_plot.update_curve(pos, ucen)
 
     @pyqtSlot()
     def draw_ellipse(self):
