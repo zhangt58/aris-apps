@@ -394,7 +394,7 @@
            <string>s [m]</string>
           </property>
           <property name="figureYlabel">
-           <string>Envelop [mm]</string>
+           <string>Envelope Size [mm]</string>
           </property>
           <property name="figureXYlabelFont">
            <font>
@@ -405,8 +405,73 @@
             <bold>false</bold>
            </font>
           </property>
+          <property name="figureTitleFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>14</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
           <property name="figureLegendToggle" stdset="0">
            <bool>true</bool>
+          </property>
+          <property name="figureXYticksFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>12</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Beam Trajectory</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="MatplotlibCurveWidget" name="trajectory_plot">
+          <property name="figureAutoScale">
+           <bool>true</bool>
+          </property>
+          <property name="figureXlabel">
+           <string>s [m]</string>
+          </property>
+          <property name="figureYlabel">
+           <string>Centroid Position [mm]</string>
+          </property>
+          <property name="figureXYlabelFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>14</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureTitleFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>14</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="figureXYticksFont">
+           <font>
+            <family>sans-serif</family>
+            <pointsize>12</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
           </property>
          </widget>
         </item>
