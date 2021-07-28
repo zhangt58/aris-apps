@@ -67,7 +67,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.ellipse_area = QtWidgets.QWidget()
-        self.ellipse_area.setGeometry(QtCore.QRect(0, 0, 1684, 621))
+        self.ellipse_area.setGeometry(QtCore.QRect(0, 0, 1684, 618))
         self.ellipse_area.setObjectName("ellipse_area")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.ellipse_area)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -199,6 +199,23 @@ class Ui_MainWindow(object):
         self.tight_layout_on_chkbox = QtWidgets.QCheckBox(self.tab)
         self.tight_layout_on_chkbox.setObjectName("tight_layout_on_chkbox")
         self.horizontalLayout_6.addWidget(self.tight_layout_on_chkbox)
+        self.line = QtWidgets.QFrame(self.tab)
+        self.line.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.horizontalLayout_6.addWidget(self.line)
+        self.label_10 = QtWidgets.QLabel(self.tab)
+        self.label_10.setObjectName("label_10")
+        self.horizontalLayout_6.addWidget(self.label_10)
+        self.size_factor_sbox = QtWidgets.QSpinBox(self.tab)
+        self.size_factor_sbox.setSuffix("")
+        self.size_factor_sbox.setMinimum(1)
+        self.size_factor_sbox.setMaximum(6)
+        self.size_factor_sbox.setObjectName("size_factor_sbox")
+        self.horizontalLayout_6.addWidget(self.size_factor_sbox)
+        self.label_11 = QtWidgets.QLabel(self.tab)
+        self.label_11.setObjectName("label_11")
+        self.horizontalLayout_6.addWidget(self.label_11)
         spacerItem = QtWidgets.QSpacerItem(40, 20,
                                            QtWidgets.QSizePolicy.Expanding,
                                            QtWidgets.QSizePolicy.Minimum)
@@ -308,6 +325,8 @@ class Ui_MainWindow(object):
         self.action_About.triggered.connect(MainWindow.onAbout)
         self.auto_xlim_btn.clicked.connect(MainWindow.on_auto_xlim)
         self.auto_ylim_btn.clicked.connect(MainWindow.on_auto_ylim)
+        self.size_factor_sbox.valueChanged['int'].connect(
+            MainWindow.on_ellipse_size_changed)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -340,6 +359,10 @@ class Ui_MainWindow(object):
         self.mticks_on_chkbox.setText(_translate("MainWindow", "Minor Ticks"))
         self.tight_layout_on_chkbox.setText(_translate("MainWindow",
                                                        "Compact"))
+        self.label_10.setText(_translate("MainWindow", "Ellipse Size"))
+        self.label_11.setText(
+            _translate("MainWindow",
+                       "<html><head/><body><p>&sigma;</p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),
                                   _translate("MainWindow", "Beam Ellipse"))
         self.envelope_plot.setFigureXlabel(_translate("MainWindow", "s [m]"))

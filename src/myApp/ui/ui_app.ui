@@ -103,7 +103,7 @@
              <x>0</x>
              <y>0</y>
              <width>1684</width>
-             <height>621</height>
+             <height>618</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_2">
@@ -326,6 +326,40 @@
            <widget class="QCheckBox" name="tight_layout_on_chkbox">
             <property name="text">
              <string>Compact</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Ellipse Size</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="size_factor_sbox">
+            <property name="suffix">
+             <string/>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>6</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;sigma;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -635,11 +669,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>size_factor_sbox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_ellipse_size_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>497</x>
+     <y>819</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1731</x>
+     <y>694</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAbout()</slot>
   <slot>onAboutQt()</slot>
   <slot>on_auto_xlim()</slot>
   <slot>on_auto_ylim()</slot>
+  <slot>on_ellipse_size_changed()</slot>
  </slots>
 </ui>
