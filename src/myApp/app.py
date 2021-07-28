@@ -16,6 +16,7 @@ Show the available templates:
 
 import sys
 
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QDoubleValidator
@@ -49,6 +50,9 @@ TWISS_KEYS_Y = [
 
 
 class MyAppWindow(BaseAppForm, Ui_MainWindow):
+
+    ellipse_size_factor_changed = pyqtSignal()
+
     def __init__(self, version, **kws):
         super(self.__class__, self).__init__()
 
@@ -69,6 +73,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
     def _post_init(self):
         """Initialize UI, user customized code put here.
         """
+        #
+        self._size_factor = self.size_factor_sbox.value()
+        self.ellipse_size_factor_changed.connect(self.draw_ellipse)
+
         # initial vars for FLAME model
         self.results = None
         self.last_bs = None
@@ -125,7 +133,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.quad_info_btn.clicked.connect(self.on_query_quad_info)
         self.elem_info_btn.clicked.connect(self.on_query_elem_info)
 
-        # auto xyscale
+        # auto xyscale (ellipse drawing)
         self.on_auto_xlim()
         self.on_auto_ylim()
 
@@ -159,6 +167,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         2. update drawing with online simulated results
         """
         self.quad_selected.B2 = grad
+
         # update simulation
         ARIS_LAT.sync_settings()
         _, fm = ARIS_LAT.run()
@@ -197,6 +206,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.envelope_plot.setLineID(1)
         self.envelope_plot.update_curve(pos, yrms)
 
+    @pyqtSlot()
     def draw_ellipse(self):
         """Draw x and y beam ellipse onto the figure area.
         """
@@ -215,14 +225,14 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self._plot_ellipse(self.x_ellipse_plot,
                            params_x,
                            color='b',
-                           factor=4,
+                           factor=self._size_factor,
                            xoy='x',
                            fill='g',
                            anote=False)
         self._plot_ellipse(self.y_ellipse_plot,
                            params_y,
                            color='r',
-                           factor=4,
+                           factor=self._size_factor,
                            xoy='y',
                            fill='m',
                            anote=False)
@@ -374,6 +384,12 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.ylim_y1_lineEdit.setText(f'{y0:.1f}')
         self.ylim_y2_lineEdit.setText(f'{y1:.1f}')
 
+    @pyqtSlot(int)
+    def on_ellipse_size_changed(self, i: int) -> None:
+        """Ellipse size factor changed.
+        """
+        self._size_factor = i
+        self.ellipse_size_factor_changed.emit()
 
 
 if __name__ == "__main__":
