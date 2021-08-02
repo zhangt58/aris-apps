@@ -17,6 +17,7 @@ class Ui_MainWindow(object):
         icon.addPixmap(QtGui.QPixmap(":/icons/default.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
+        MainWindow.setIconSize(QtCore.QSize(36, 36))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -120,7 +121,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.ellipse_area = QtWidgets.QWidget()
-        self.ellipse_area.setGeometry(QtCore.QRect(0, 0, 1684, 618))
+        self.ellipse_area.setGeometry(QtCore.QRect(0, 0, 1684, 538))
         self.ellipse_area.setObjectName("ellipse_area")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.ellipse_area)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -339,6 +340,7 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         font.setWeight(50)
         self.trajectory_plot.setFigureTitleFont(font)
+        self.trajectory_plot.setProperty("figureLegendToggle", True)
         font = QtGui.QFont()
         font.setFamily("sans-serif")
         font.setPointSize(12)
@@ -376,24 +378,47 @@ class Ui_MainWindow(object):
         self.menu_Help = QtWidgets.QMenu(self.menubar)
         self.menu_Help.setObjectName("menu_Help")
         MainWindow.setMenuBar(self.menubar)
+        self.toolBar = QtWidgets.QToolBar(MainWindow)
+        self.toolBar.setStyleSheet("QToolBar {\n"
+                                   "    padding: 4px;\n"
+                                   "    spacing: 4px;\n"
+                                   "}")
+        self.toolBar.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
+        self.toolBar.setObjectName("toolBar")
+        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.action_About = QtWidgets.QAction(MainWindow)
         self.action_About.setObjectName("action_About")
         self.actionAbout_Qt = QtWidgets.QAction(MainWindow)
         self.actionAbout_Qt.setObjectName("actionAbout_Qt")
         self.actionE_xit = QtWidgets.QAction(MainWindow)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/exit.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.actionE_xit.setIcon(icon2)
         self.actionE_xit.setObjectName("actionE_xit")
         self.actionContents = QtWidgets.QAction(MainWindow)
         self.actionContents.setObjectName("actionContents")
         self.actionLoad_Lattice = QtWidgets.QAction(MainWindow)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/icons/load_lattice.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionLoad_Lattice.setIcon(icon3)
         self.actionLoad_Lattice.setObjectName("actionLoad_Lattice")
-        self.menu_File.addAction(self.actionLoad_Lattice)
-        self.menu_File.addAction(self.actionE_xit)
+        self.actionExport_Lattice = QtWidgets.QAction(MainWindow)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icons/export.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionExport_Lattice.setIcon(icon4)
+        self.actionExport_Lattice.setObjectName("actionExport_Lattice")
         self.menu_Help.addAction(self.actionContents)
         self.menu_Help.addSeparator()
         self.menu_Help.addAction(self.action_About)
         self.menu_Help.addAction(self.actionAbout_Qt)
         self.menubar.addAction(self.menu_File.menuAction())
         self.menubar.addAction(self.menu_Help.menuAction())
+        self.toolBar.addAction(self.actionLoad_Lattice)
+        self.toolBar.addAction(self.actionExport_Lattice)
+        self.toolBar.addAction(self.actionE_xit)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
@@ -421,6 +446,7 @@ class Ui_MainWindow(object):
         self.trajectory_plot.xlimitMinChanged['double'].connect(
             self.trajectory_layout_plot.setXLimitMin)
         self.actionLoad_Lattice.triggered.connect(MainWindow.onLoadLattice)
+        self.actionExport_Lattice.triggered.connect(MainWindow.onExportLatfile)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -481,15 +507,24 @@ class Ui_MainWindow(object):
                                   _translate("MainWindow", "Schematic Layout"))
         self.menu_File.setTitle(_translate("MainWindow", "&File"))
         self.menu_Help.setTitle(_translate("MainWindow", "&Help"))
+        self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
         self.action_About.setText(_translate("MainWindow", "&About"))
         self.action_About.setShortcut(_translate("MainWindow", "Ctrl+A"))
         self.actionAbout_Qt.setText(_translate("MainWindow", "About Qt"))
         self.actionE_xit.setText(_translate("MainWindow", "E&xit"))
+        self.actionE_xit.setToolTip(_translate("MainWindow", "Exit this app."))
         self.actionE_xit.setShortcut(_translate("MainWindow", "Ctrl+W"))
         self.actionContents.setText(_translate("MainWindow", "Contents"))
         self.actionContents.setShortcut(_translate("MainWindow", "F1"))
         self.actionLoad_Lattice.setText(
             _translate("MainWindow", "Load Lattice"))
+        self.actionLoad_Lattice.setToolTip(
+            _translate("MainWindow", "Load machine and segment."))
+        self.actionExport_Lattice.setText(
+            _translate("MainWindow", "Export Lattice File"))
+        self.actionExport_Lattice.setToolTip(
+            _translate("MainWindow",
+                       "Export physics model to a FLAME lattice file."))
 
 
 from mpl4qt.widgets.mplbasewidget import MatplotlibBaseWidget

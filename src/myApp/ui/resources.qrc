@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="icons">
+    <file>export.png</file>
+    <file>exit.png</file>
+    <file>load_lattice.png</file>
     <file>info.png</file>
     <file>default.png</file>
   </qresource>
