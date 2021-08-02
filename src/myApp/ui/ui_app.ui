@@ -19,12 +19,112 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Select quadrupole</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="quad1_name_cbb">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="quad_info_btn">
+        <property name="toolTip">
+         <string>Click to see the details of selected device.</string>
+        </property>
+        <property name="text">
+         <string>info</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/info.png</normaloff>:/icons/info.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Gradient Setting</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="quad1_grad_dsbox">
+        <property name="suffix">
+         <string> T/m</string>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="ellipse_tab">
        <attribute name="title">
         <string>Beam Ellipse</string>
        </attribute>
@@ -112,7 +212,7 @@
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <widget class="QWidget" name="">
+              <widget class="QWidget" name="layoutWidget">
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <item>
                  <widget class="MatplotlibBaseWidget" name="x_ellipse_plot">
@@ -380,204 +480,159 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="envelope_tab">
        <attribute name="title">
         <string>Beam Envelope</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="MatplotlibCurveWidget" name="envelope_plot">
-          <property name="figureAutoScale">
-           <bool>true</bool>
+         <widget class="QSplitter" name="envelope_plot_splitter">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="figureXlabel">
-           <string>s [m]</string>
-          </property>
-          <property name="figureYlabel">
-           <string>Envelope Size [mm]</string>
-          </property>
-          <property name="figureXYlabelFont">
-           <font>
-            <family>sans-serif</family>
-            <pointsize>14</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="figureTitleFont">
-           <font>
-            <family>sans-serif</family>
-            <pointsize>14</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="figureLegendToggle" stdset="0">
-           <bool>true</bool>
-          </property>
-          <property name="figureXYticksFont">
-           <font>
-            <family>sans-serif</family>
-            <pointsize>12</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-           </font>
-          </property>
+          <widget class="MatplotlibCurveWidget" name="envelope_plot">
+           <property name="figureAutoScale">
+            <bool>true</bool>
+           </property>
+           <property name="figureXlabel">
+            <string>s [m]</string>
+           </property>
+           <property name="figureYlabel">
+            <string>Envelope Size [mm]</string>
+           </property>
+           <property name="figureXYlabelFont">
+            <font>
+             <family>sans-serif</family>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="figureTitleFont">
+            <font>
+             <family>sans-serif</family>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="figureLegendToggle" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="figureXYticksFont">
+            <font>
+             <family>sans-serif</family>
+             <pointsize>12</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+          </widget>
+          <widget class="MatplotlibBaseWidget" name="envelope_layout_plot">
+           <property name="figureAutoScale">
+            <bool>true</bool>
+           </property>
+           <property name="figureXTicksVisible">
+            <bool>false</bool>
+           </property>
+           <property name="figureToolbarToggle" stdset="0">
+            <bool>false</bool>
+           </property>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="tajectory_tab">
        <attribute name="title">
         <string>Beam Trajectory</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="MatplotlibCurveWidget" name="trajectory_plot">
-          <property name="figureAutoScale">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QSplitter" name="trajectory_plot_splitter">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <widget class="MatplotlibCurveWidget" name="trajectory_plot">
+           <property name="figureAutoScale">
+            <bool>true</bool>
+           </property>
+           <property name="figureXlabel">
+            <string>s [m]</string>
+           </property>
+           <property name="figureYlabel">
+            <string>Centroid Position [mm]</string>
+           </property>
+           <property name="figureXYlabelFont">
+            <font>
+             <family>sans-serif</family>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="figureTitleFont">
+            <font>
+             <family>sans-serif</family>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="figureXYticksFont">
+            <font>
+             <family>sans-serif</family>
+             <pointsize>12</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+          </widget>
+          <widget class="MatplotlibBaseWidget" name="trajectory_layout_plot">
+           <property name="figureAutoScale">
+            <bool>true</bool>
+           </property>
+           <property name="figureToolbarToggle" stdset="0">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layout_tab">
+       <attribute name="title">
+        <string>Schematic Layout</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="MatplotlibBaseWidget" name="layout_plot">
+          <property name="figureAspectRatio">
+           <string>20</string>
+          </property>
+          <property name="figureTightLayout" stdset="0">
            <bool>true</bool>
           </property>
-          <property name="figureXlabel">
-           <string>s [m]</string>
+          <property name="figureDPI" stdset="0">
+           <double>130.000000000000000</double>
           </property>
-          <property name="figureYlabel">
-           <string>Centroid Position [mm]</string>
+          <property name="figureXTicksVisible">
+           <bool>false</bool>
           </property>
-          <property name="figureXYlabelFont">
-           <font>
-            <family>sans-serif</family>
-            <pointsize>14</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="figureTitleFont">
-           <font>
-            <family>sans-serif</family>
-            <pointsize>14</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="figureXYticksFont">
-           <font>
-            <family>sans-serif</family>
-            <pointsize>12</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-           </font>
+          <property name="figureYTicksVisible">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
      </widget>
-    </item>
-    <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Select quadrupole</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="quad1_name_cbb">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>1</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <family>Monospace</family>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="quad_info_btn">
-        <property name="toolTip">
-         <string>Click to see the details of selected device.</string>
-        </property>
-        <property name="text">
-         <string>info</string>
-        </property>
-        <property name="icon">
-         <iconset resource="resources.qrc">
-          <normaloff>:/icons/info.png</normaloff>:/icons/info.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Gradient Setting</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="quad1_grad_dsbox">
-        <property name="suffix">
-         <string> T/m</string>
-        </property>
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-100.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>100.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </item>
    </layout>
   </widget>
@@ -594,6 +649,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionLoad_Lattice"/>
     <addaction name="actionE_xit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -635,6 +691,11 @@
    </property>
    <property name="shortcut">
     <string>F1</string>
+   </property>
+  </action>
+  <action name="actionLoad_Lattice">
+   <property name="text">
+    <string>Load Lattice</string>
    </property>
   </action>
  </widget>
@@ -709,8 +770,8 @@
    <slot>on_auto_xlim()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>836</x>
-     <y>782</y>
+     <x>863</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
      <x>1730</x>
@@ -725,8 +786,8 @@
    <slot>on_auto_ylim()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1675</x>
-     <y>774</y>
+     <x>1708</x>
+     <y>795</y>
     </hint>
     <hint type="destinationlabel">
      <x>1729</x>
@@ -741,12 +802,156 @@
    <slot>on_ellipse_size_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>497</x>
-     <y>819</y>
+     <x>517</x>
+     <y>837</y>
     </hint>
     <hint type="destinationlabel">
      <x>1731</x>
      <y>694</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>envelope_plot</sender>
+   <signal>autoScaleOnUpdated(bool)</signal>
+   <receiver>envelope_layout_plot</receiver>
+   <slot>setFigureAutoScale(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>642</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>864</x>
+     <y>621</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>envelope_plot</sender>
+   <signal>gridOnUpdated(bool)</signal>
+   <receiver>envelope_layout_plot</receiver>
+   <slot>setFigureGridToggle(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>500</x>
+     <y>435</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>770</x>
+     <y>613</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>envelope_plot</sender>
+   <signal>xlimitMinChanged(double)</signal>
+   <receiver>envelope_layout_plot</receiver>
+   <slot>setXLimitMin(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>589</x>
+     <y>375</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>602</x>
+     <y>563</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>envelope_plot</sender>
+   <signal>xlimitMaxChanged(double)</signal>
+   <receiver>envelope_layout_plot</receiver>
+   <slot>setXLimitMax(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>486</x>
+     <y>366</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>477</x>
+     <y>516</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trajectory_plot</sender>
+   <signal>autoScaleOnUpdated(bool)</signal>
+   <receiver>trajectory_layout_plot</receiver>
+   <slot>setFigureAutoScale(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>524</x>
+     <y>427</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>530</x>
+     <y>613</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trajectory_plot</sender>
+   <signal>gridOnUpdated(bool)</signal>
+   <receiver>trajectory_layout_plot</receiver>
+   <slot>setFigureGridToggle(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>363</x>
+     <y>460</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>351</x>
+     <y>539</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trajectory_plot</sender>
+   <signal>xlimitMaxChanged(double)</signal>
+   <receiver>trajectory_layout_plot</receiver>
+   <slot>setXLimitMax(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>795</x>
+     <y>418</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>797</x>
+     <y>569</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>trajectory_plot</sender>
+   <signal>xlimitMinChanged(double)</signal>
+   <receiver>trajectory_layout_plot</receiver>
+   <slot>setXLimitMin(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>964</x>
+     <y>370</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>975</x>
+     <y>549</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoad_Lattice</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onLoadLattice()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>866</x>
+     <y>456</y>
     </hint>
    </hints>
   </connection>
@@ -757,5 +962,6 @@
   <slot>on_auto_xlim()</slot>
   <slot>on_auto_ylim()</slot>
   <slot>on_ellipse_size_changed()</slot>
+  <slot>onLoadLattice()</slot>
  </slots>
 </ui>
