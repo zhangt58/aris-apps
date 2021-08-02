@@ -13,7 +13,6 @@ Show the available templates:
 
 >>> makeBasePyQtApp -l
 """
-import time
 import sys
 
 from PyQt5.QtCore import pyqtSignal
@@ -29,6 +28,7 @@ from mpl4qt.widgets import MatplotlibBaseWidget
 
 from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
+from phantasy_ui import milli_sleep
 from phantasy_ui.widgets import ElementWidget
 from phantasy_ui.widgets import LatticeWidget
 from phantasy_apps.allison_scanner.data import draw_beam_ellipse_with_params
@@ -169,9 +169,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         reconnect, to avoid unnecessary trigging.
         """
         self.quad_selected = self.__mp.get_elements(name=name)[0]
-
-        time.sleep(1.0)
-
+        milli_sleep(500)
         self._quad_widget = ElementWidget(self.quad_selected)
         self.quad1_grad_dsbox.valueChanged.disconnect()
         try:
@@ -193,7 +191,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         1. print the setting of selected quad
         2. update drawing with online simulated results
         """
-        setattr(self.quad_selected, QUAD_FIELD_NAME) = grad
+        setattr(self.quad_selected, QUAD_FIELD_NAME, grad)
 
         # update simulation
         self.__lat.sync_settings()
