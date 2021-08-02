@@ -35,6 +35,19 @@ NAME_MAP = {
     'yp_rms': (f"{SIGMA}(y')", 'mrad'),
 }
 
+# key strings for Twiss X,Y parameters
+TWISS_KEYS_X = [
+    i.format(u='x') for i in ('{u}_cen', '{u}p_cen', '{u}_rms', '{u}p_rms',
+                              'emit_{u}', 'emitn_{u}', 'alpha_{u}', 'beta_{u}',
+                              'gamma_{u}', 'total_intensity')
+]
+TWISS_KEYS_Y = [
+    i.format(u='y') for i in ('{u}_cen', '{u}p_cen', '{u}_rms', '{u}p_rms',
+                              'emit_{u}', 'emitn_{u}', 'alpha_{u}', 'beta_{u}',
+                              'gamma_{u}', 'total_intensity')
+]
+
+
 
 class ResultsModel(QStandardItemModel):
     """Data model for Twiss parameters.

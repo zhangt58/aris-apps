@@ -13,11 +13,13 @@ Show the available templates:
 
 >>> makeBasePyQtApp -l
 """
-
+import time
 import sys
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import QEventLoop
+from PyQt5.QtCore import QVariant
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QDoubleValidator
 from PyQt5.QtWidgets import QMainWindow
@@ -28,30 +30,28 @@ from mpl4qt.widgets import MatplotlibBaseWidget
 from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
 from phantasy_ui.widgets import ElementWidget
+from phantasy_ui.widgets import LatticeWidget
 from phantasy_apps.allison_scanner.data import draw_beam_ellipse_with_params
 
+from .utils import ResultsModel
+from .utils import TWISS_KEYS_X
+from .utils import TWISS_KEYS_Y
 from .ui.ui_app import Ui_MainWindow
 
-MACH, SEGM = "ARIS", "F1"
-ARIS_MP = MachinePortal(MACH, SEGM)
-ARIS_LAT = ARIS_MP.work_lattice_conf
-
-# key strings for Twiss X,Y parameters
-TWISS_KEYS_X = [
-    i.format(u='x') for i in ('{u}_cen', '{u}p_cen', '{u}_rms', '{u}p_rms',
-                              'emit_{u}', 'emitn_{u}', 'alpha_{u}', 'beta_{u}',
-                              'gamma_{u}', 'total_intensity')
-]
-TWISS_KEYS_Y = [
-    i.format(u='y') for i in ('{u}_cen', '{u}p_cen', '{u}_rms', '{u}p_rms',
-                              'emit_{u}', 'emitn_{u}', 'alpha_{u}', 'beta_{u}',
-                              'gamma_{u}', 'total_intensity')
-]
+DEFAULT_MACHINE, DEFAULT_SEGMENT = "ARIS_VA", "F1"
+QUAD_FIELD_NAME = "I" # B2
 
 
 class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
+    # update ellipse drawing size
     ellipse_size_factor_changed = pyqtSignal()
+
+    # loaded machine/segment changed
+    lattice_changed = pyqtSignal(QVariant)
+
+    # update layout drawings
+    update_layout = pyqtSignal()
 
     def __init__(self, version, **kws):
         super(self.__class__, self).__init__()
@@ -74,6 +74,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """Initialize UI, user customized code put here.
         """
         #
+        self.quad1_name_cbb.currentTextChanged.connect(self.on_quad1_name_changed)
+        self.elemlist_cbb.currentTextChanged.connect(self.on_target_element_changed)
+
+        #
         self._size_factor = self.size_factor_sbox.value()
         self.ellipse_size_factor_changed.connect(self.draw_ellipse)
 
@@ -85,20 +89,22 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # ElementWidget for selected quad and target element
         self._quad_widget = None
         self._elem_widget = None
+        # element query
+        self.quad_info_btn.clicked.connect(self.on_query_quad_info)
+        self.elem_info_btn.clicked.connect(self.on_query_elem_info)
 
-        # Fill comboBox quad1_name_cbb with all quad names.
-        quad_name_list = [i.name for i in ARIS_MP.get_elements(type='QUAD')]
-        self.quad1_name_cbb.addItems(quad_name_list)
-        # connect currentTextChanged signal to slot: on_quad1_name_changed()
-        self.quad1_name_cbb.currentTextChanged.connect(
-            self.on_quad1_name_changed)
+        # lattice load window
+        self.lattice_load_window = None
+        self.__mp = None
+        self.__lat = None
+
+        # update layout drawings
+        self.update_layout.connect(self.draw_layout)
+        # lattice changed
+        self.lattice_changed.connect(self.on_lattice_changed)
+
         # connect valueChanged signal of quad1_grad_dsbox to on_quad1_grad_changed()
         self.quad1_grad_dsbox.valueChanged.connect(self.on_quad1_grad_changed)
-        # initialize quad1_name_cbb
-        self.quad1_name_cbb.currentTextChanged.emit(quad_name_list[0])
-
-        # initial elemlist_cbb
-        self.init_elemlist()
 
         # envelope and trajectory
         self.__init_envelope_plot()
@@ -117,19 +123,19 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.mticks_on_chkbox.toggled.connect(self.on_mticks_enabled)
         self.tight_layout_on_chkbox.toggled.connect(self.on_tightlayout_enabled)
 
-        # update drawing
-        self.quad1_grad_dsbox.valueChanged.emit(self.quad1_grad_dsbox.value())
-        # reset current selected element with the last element
-        self.elemlist_cbb.setCurrentIndex(self.elemlist_cbb.count() - 1)
-        self.elemlist_cbb.currentTextChanged.emit(self.elemlist_cbb.currentText())
+        # preload default machine/segment
+        self.__preload_lattice(DEFAULT_MACHINE, DEFAULT_SEGMENT)
 
-        # element query
-        self.quad_info_btn.clicked.connect(self.on_query_quad_info)
-        self.elem_info_btn.clicked.connect(self.on_query_elem_info)
-
+    def __preload_lattice(self, mach, segm):
+        self.actionLoad_Lattice.triggered.emit()
+        self.lattice_load_window.mach_cbb.setCurrentText(mach)
+        self.lattice_load_window.seg_cbb.setCurrentText(segm)
+        loop = QEventLoop()
+        self.lattice_load_window.latticeChanged.connect(loop.exit)
+        self.lattice_load_window.load_btn.clicked.emit()
+        loop.exec_()
         # auto xyscale (ellipse drawing)
-        self.on_auto_xlim()
-        self.on_auto_ylim()
+        self.auto_limits()
 
     def __init_envelope_plot(self):
         """Initialize plot area for beam envelope.
@@ -162,12 +168,15 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         when set value to quad1_grad_dsbox, disconnect valueChanged and
         reconnect, to avoid unnecessary trigging.
         """
-        self.quad_selected = ARIS_MP.get_elements(name=name)[0]
+        self.quad_selected = self.__mp.get_elements(name=name)[0]
+
+        time.sleep(1.0)
+
         self._quad_widget = ElementWidget(self.quad_selected)
         self.quad1_grad_dsbox.valueChanged.disconnect()
         try:
             self.quad1_grad_dsbox.setValue(
-                self.quad_selected.current_setting('B2'))
+                self.quad_selected.current_setting(QUAD_FIELD_NAME))
         except TypeError:
             # current_settings('B2') is None --> most likely VA is not running
             QMessageBox.critical(
@@ -184,11 +193,11 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         1. print the setting of selected quad
         2. update drawing with online simulated results
         """
-        self.quad_selected.B2 = grad
+        setattr(self.quad_selected, QUAD_FIELD_NAME) = grad
 
         # update simulation
-        ARIS_LAT.sync_settings()
-        _, fm = ARIS_LAT.run()
+        self.__lat.sync_settings()
+        _, fm = self.__lat.run()
         self.fm = fm
         self.results, _ = fm.run(monitor='all')
         r, _ = fm.run(monitor=[self.elemlist_cbb.currentText()])
@@ -211,7 +220,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """Draw beam envelop onto the figure area.
         """
         results_dict = self.fm.collect_data(self.results, 'pos', 'xrms', 'yrms')
-        pos = results_dict['pos']
+        pos = results_dict['pos'] + self.__z0
         xrms = results_dict['xrms']
         yrms = results_dict['yrms']
         for line_id, urms in zip((0, 1), (xrms, yrms)):
@@ -222,7 +231,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """Draw beam centroid trajectory onto the figure area.
         """
         results_dict = self.fm.collect_data(self.results, 'pos', 'xcen', 'ycen')
-        pos = results_dict['pos']
+        pos = results_dict['pos'] + self.__z0
         xcen = results_dict['xcen']
         ycen = results_dict['ycen']
         for line_id, ucen in zip((0, 1), (xcen, ycen)):
@@ -287,23 +296,25 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.mticks_on_chkbox.toggled.emit(self.mticks_on_chkbox.isChecked())
         self.tight_layout_on_chkbox.toggled.emit(self.tight_layout_on_chkbox.isChecked())
 
-    def init_elemlist(self):
-        #
-        # this should be called after machine/segment is changed
-        # now only work with ARIS/F1, todo in the future with LatticeWidget
-        #
-        ename_list = [i.name for i in ARIS_LAT]
-        self.elemlist_cbb.addItems(ename_list)
-        self.elemlist_cbb.currentTextChanged.connect(self.on_target_element_changed)
+    def draw_layout(self):
+        for o in (self.layout_plot, self.envelope_layout_plot, self.trajectory_layout_plot):
+            o.clear_figure()
+            _, ax = self.__lat.layout.draw(ax=o.axes, fig=o.figure,
+                                           span=(1.05, 1.1),
+                                           fig_opt={'figsize': (20, 8), 'dpi': 130})
+        self.envelope_plot_splitter.setStretchFactor(0, 4)
+        self.envelope_plot_splitter.setStretchFactor(1, 1)
+        self.trajectory_plot_splitter.setStretchFactor(0, 4)
+        self.trajectory_plot_splitter.setStretchFactor(1, 1)
 
     @pyqtSlot('QString')
     def on_target_element_changed(self, ename: str):
         """Get beam state result after the selected element from FLAME model.
         """
-        elem = ARIS_LAT[ename]
+        elem = self.__lat[ename]
         self._elem_widget = ElementWidget(elem)
         self.family_lineEdit.setText(elem.family)
-        self.pos_lineEdit.setText(f"{elem.sb:.3f} m")
+        self.pos_lineEdit.setText(f"{elem.sb + self.__z0:.3f} m")
         r, _ = self.fm.run(monitor=[ename])
         if r == []:
             QMessageBox.warning(self, "Select Element",
@@ -314,7 +325,6 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.draw_ellipse()
 
     def _show_results(self, data):
-        from .utils import ResultsModel
         m = ResultsModel(self.twiss_results_treeView, data)
         m.set_model()
 
@@ -377,6 +387,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
             o.setTightLayoutToggle(enabled)
 
+    def auto_limits(self):
+        self.on_auto_xlim()
+        self.on_auto_ylim()
+
     @pyqtSlot()
     def on_auto_xlim(self):
         """Auto set xlimit.
@@ -413,6 +427,50 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """
         self._size_factor = i
         self.ellipse_size_factor_changed.emit()
+
+    @pyqtSlot()
+    def onLoadLattice(self):
+        """Load machine/segment.
+        """
+        if self.lattice_load_window is None:
+            self.lattice_load_window = LatticeWidget()
+            self.lattice_load_window.latticeChanged.connect(self.lattice_changed)
+            self.lattice_load_window.latticeChanged.connect(
+                    self.lattice_load_window.close)
+        self.lattice_load_window.show()
+
+    @pyqtSlot(QVariant)
+    def on_lattice_changed(self, mp):
+        """A new machine/segment is loaded.
+        """
+        self.__mp = mp
+        self.__lat = mp.work_lattice_conf
+        self.__z0 = self.__lat.layout.z
+
+        # update layout drawings
+        self.update_layout.emit()
+
+        # update element list (QUAD)
+        quad_name_list = [i.name for i in mp.get_elements(type='QUAD')]
+        self.quad1_name_cbb.currentTextChanged.disconnect()
+        self.quad1_name_cbb.clear()
+        self.quad1_name_cbb.addItems(quad_name_list)
+        self.quad1_name_cbb.currentTextChanged.connect(self.on_quad1_name_changed)
+
+        # update element list (at which view results)
+        ename_list = [i.name for i in self.__lat]
+        self.elemlist_cbb.currentTextChanged.disconnect()
+        self.elemlist_cbb.addItems(ename_list)
+        self.elemlist_cbb.currentTextChanged.connect(self.on_target_element_changed)
+
+        # update selected element (QUAD) and its settings
+        self.quad1_name_cbb.currentTextChanged.emit(self.quad1_name_cbb.currentText())
+
+        # update plots
+        self.quad1_grad_dsbox.valueChanged.emit(self.quad1_grad_dsbox.value())
+        # reset current selected element with the last element
+        self.elemlist_cbb.setCurrentIndex(self.elemlist_cbb.count() - 1)
+        self.elemlist_cbb.currentTextChanged.emit(self.elemlist_cbb.currentText())
 
 
 if __name__ == "__main__":
