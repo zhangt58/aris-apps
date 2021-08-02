@@ -29,6 +29,7 @@ from mpl4qt.widgets import MatplotlibBaseWidget
 from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
 from phantasy_ui import milli_sleep
+from phantasy_ui import get_save_filename
 from phantasy_ui.widgets import ElementWidget
 from phantasy_ui.widgets import LatticeWidget
 from phantasy_apps.allison_scanner.data import draw_beam_ellipse_with_params
@@ -469,6 +470,27 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # reset current selected element with the last element
         self.elemlist_cbb.setCurrentIndex(self.elemlist_cbb.count() - 1)
         self.elemlist_cbb.currentTextChanged.emit(self.elemlist_cbb.currentText())
+
+    @pyqtSlot()
+    def onExportLatfile(self):
+        """Export FLAME lattice file from the model.
+        """
+        filename, ext = get_save_filename(self,
+                                          caption="Choose a file to save",
+                                          cdir='.',
+                                          type_filter="Lattice File (*.lat)")
+        if filename is None:
+            return
+        try:
+            self.fm.generate_latfile(latfile=filename)
+        except:
+            QMessageBox.warning(self, "Export Lattice File",
+                    "Failed to export model as a FLAME lattice file.",
+                    QMessageBox.Ok, QMessageBox.Ok)
+        else:
+            QMessageBox.information(self, "Export Lattice File",
+                    f"Export FLAME lattice file to {filename}.",
+                    QMessageBox.Ok, QMessageBox.Ok)
 
 
 if __name__ == "__main__":
