@@ -40,7 +40,10 @@ from .utils import TWISS_KEYS_Y
 from .ui.ui_app import Ui_MainWindow
 
 DEFAULT_MACHINE, DEFAULT_SEGMENT = "ARIS_VA", "F1"
-QUAD_FIELD_NAME = "I" # B2
+
+VALID_ELEMENT_TYPES = ("QUAD", "BEND")
+DEFAULT_ELEMENT_TYPE = "QUAD"
+DEFAULT_FIELD_NAME = "I" # B2
 
 
 class MyAppWindow(BaseAppForm, Ui_MainWindow):
@@ -75,7 +78,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """Initialize UI, user customized code put here.
         """
         #
-        self.quad1_name_cbb.currentTextChanged.connect(self.on_quad1_name_changed)
+        self.elem_type_cbb.currentTextChanged.connect(self.on_elem_type_changed)
+        self.elem_name_cbb.currentTextChanged.connect(self.on_elem_name_changed)
+        self.field_name_cbb.currentTextChanged.connect(self.on_fname_changed)
         self.elemlist_cbb.currentTextChanged.connect(self.on_target_element_changed)
 
         #
@@ -87,12 +92,12 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.last_bs = None
         self.fm = None
 
-        # ElementWidget for selected quad and target element
-        self._quad_widget = None
-        self._elem_widget = None
+        # ElementWidget for selected element and target element
+        self._element_widget = None
+        self._target_elem_widget = None
         # element query
-        self.quad_info_btn.clicked.connect(self.on_query_quad_info)
         self.elem_info_btn.clicked.connect(self.on_query_elem_info)
+        self.target_elem_info_btn.clicked.connect(self.on_query_target_elem_info)
 
         # lattice load window
         self.lattice_load_window = None
@@ -104,8 +109,8 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # lattice changed
         self.lattice_changed.connect(self.on_lattice_changed)
 
-        # connect valueChanged signal of quad1_grad_dsbox to on_quad1_grad_changed()
-        self.quad1_grad_dsbox.valueChanged.connect(self.on_quad1_grad_changed)
+        # connect valueChanged signal of new_cset_dsbox to on_new_cset_changed()
+        self.new_cset_dsbox.valueChanged.connect(self.on_new_cset_changed)
 
         # envelope and trajectory
         self.__init_envelope_plot()
@@ -163,19 +168,19 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         o.setLineLabel("$y_0$")
 
     @pyqtSlot('QString')
-    def on_quad1_name_changed(self, name: str) -> None:
-        """When the current selected quad name is changed, do:
-        show the current setting of the selected quad on quad1_grad_dsbox.
-        when set value to quad1_grad_dsbox, disconnect valueChanged and
-        reconnect, to avoid unnecessary trigging.
+    def on_fname_changed(self, fname: str) -> None:
+        """Selected field name is changed.
         """
-        self.quad_selected = self.__mp.get_elements(name=name)[0]
-        milli_sleep(500)
-        self._quad_widget = ElementWidget(self.quad_selected)
-        self.quad1_grad_dsbox.valueChanged.disconnect()
+        # 1. Update current cset and rd values, initialize new cset.
+        self.fld_selected = self.elem_selected.get_field(fname)
+        cset = self.fld_selected.current_setting()
+        rd = self.fld_selected.value
+        self.live_cset_lineEdit.setText(f"{cset:.3f}")
+        self.live_rd_lineEdit.setText(f"{rd:.3f}")
+
+        self.new_cset_dsbox.valueChanged.disconnect()
         try:
-            self.quad1_grad_dsbox.setValue(
-                self.quad_selected.current_setting(QUAD_FIELD_NAME))
+            self.new_cset_dsbox.setValue(cset)
         except TypeError:
             # current_settings('B2') is None --> most likely VA is not running
             QMessageBox.critical(
@@ -183,16 +188,33 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
                 "Cannot reach process variables, please either start virtual accelerator or ensure Channel Access is permittable.",
                 QMessageBox.Ok, QMessageBox.Ok)
             sys.exit(1)
+        self.new_cset_dsbox.valueChanged.connect(self.on_new_cset_changed)
 
-        self.quad1_grad_dsbox.valueChanged.connect(self.on_quad1_grad_changed)
+    @pyqtSlot('QString')
+    def on_elem_name_changed(self, name: str) -> None:
+        """When the current selected element name is changed."""
+        # 1. refresh the field name list combobox
+        # 2. set field name cbb with the first item
+
+        self.elem_selected = self.__mp.get_elements(name=name)[0]
+        # milli_sleep(500)
+        self._element_widget = ElementWidget(self.elem_selected)
+        #
+        self.field_name_cbb.currentTextChanged.disconnect()
+        self.field_name_cbb.clear()
+        self.field_name_cbb.addItems(self.elem_selected.fields)
+        #
+        self.field_name_cbb.setCurrentIndex(0)
+        self.field_name_cbb.currentTextChanged.connect(self.on_fname_changed)
+        self.field_name_cbb.currentTextChanged.emit(self.field_name_cbb.currentText())
 
     @pyqtSlot(float)
-    def on_quad1_grad_changed(self, grad: float) -> None:
-        """When the setting of the selected quad is changed, do:
-        1. print the setting of selected quad
+    def on_new_cset_changed(self, val: float) -> None:
+        """When the setting of the selected element/field is changed, do:
+        1. print the setting of selected element/field
         2. update drawing with online simulated results
         """
-        setattr(self.quad_selected, QUAD_FIELD_NAME, grad)
+        self.fld_selected.value = val
 
         # update simulation
         self.__lat.sync_settings()
@@ -311,7 +333,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """Get beam state result after the selected element from FLAME model.
         """
         elem = self.__lat[ename]
-        self._elem_widget = ElementWidget(elem)
+        self._target_elem_widget = ElementWidget(elem)
         self.family_lineEdit.setText(elem.family)
         self.pos_lineEdit.setText(f"{elem.sb + self.__z0:.3f} m")
         r, _ = self.fm.run(monitor=[ename])
@@ -328,22 +350,22 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         m.set_model()
 
     @pyqtSlot()
-    def on_query_quad_info(self):
-        """Pop up dialog for selected quad for info query.
-        """
-        if self._quad_widget is None:
-            return
-        self._quad_widget.show()
-        self._quad_widget.raise_()
-
-    @pyqtSlot()
     def on_query_elem_info(self):
         """Pop up dialog for selected element for info query.
         """
-        if self._elem_widget is None:
+        if self._element_widget is None:
             return
-        self._elem_widget.show()
-        self._elem_widget.raise_()
+        self._element_widget.show()
+        self._element_widget.raise_()
+
+    @pyqtSlot()
+    def on_query_target_elem_info(self):
+        """Pop up dialog for selected target element for info query.
+        """
+        if self._target_elem_widget is None:
+            return
+        self._target_elem_widget.show()
+        self._target_elem_widget.raise_()
 
     @pyqtSlot('QString')
     def on_xlimit_changed(self, s):
@@ -396,7 +418,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """
         x0, x1 = 0, 1
         for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
-            o.set_autoscale()
+            o.set_autoscale('x')
             x0_, x1_ = o.axes.get_xlim()
             if x0_ < x0:
                 x0 = x0_
@@ -411,7 +433,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """
         y0, y1 = 0, 1
         for o in self.ellipse_area.findChildren(MatplotlibBaseWidget):
-            o.set_autoscale()
+            o.set_autoscale('y')
             y0_, y1_ = o.axes.get_ylim()
             if y0_ < y0:
                 y0 = y0_
@@ -449,12 +471,17 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # update layout drawings
         self.update_layout.emit()
 
-        # update element list (QUAD)
-        quad_name_list = [i.name for i in mp.get_elements(type='QUAD')]
-        self.quad1_name_cbb.currentTextChanged.disconnect()
-        self.quad1_name_cbb.clear()
-        self.quad1_name_cbb.addItems(quad_name_list)
-        self.quad1_name_cbb.currentTextChanged.connect(self.on_quad1_name_changed)
+        # update element type cbb,
+        self.elem_type_cbb.currentTextChanged.disconnect()
+        self.elem_type_cbb.clear()
+        dtype_list = list(set([i.family for i in self.__lat if i.family in VALID_ELEMENT_TYPES]))
+        self.elem_type_cbb.addItems(dtype_list)
+        if DEFAULT_ELEMENT_TYPE in dtype_list:
+            self.elem_type_cbb.setCurrentText(DEFAULT_ELEMENT_TYPE)
+        else:
+            self.elem_type_cbb.setCurrentIndex(0)
+        self.elem_type_cbb.currentTextChanged.connect(self.on_elem_type_changed)
+        self.elem_type_cbb.currentTextChanged.emit(self.elem_type_cbb.currentText())
 
         # update element list (at which view results)
         ename_list = [i.name for i in self.__lat]
@@ -462,11 +489,11 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.elemlist_cbb.addItems(ename_list)
         self.elemlist_cbb.currentTextChanged.connect(self.on_target_element_changed)
 
-        # update selected element (QUAD) and its settings
-        self.quad1_name_cbb.currentTextChanged.emit(self.quad1_name_cbb.currentText())
+        # update selected field and its settings
+        self.field_name_cbb.currentTextChanged.emit(self.field_name_cbb.currentText())
 
         # update plots
-        self.quad1_grad_dsbox.valueChanged.emit(self.quad1_grad_dsbox.value())
+        self.new_cset_dsbox.valueChanged.emit(self.new_cset_dsbox.value())
         # reset current selected element with the last element
         self.elemlist_cbb.setCurrentIndex(self.elemlist_cbb.count() - 1)
         self.elemlist_cbb.currentTextChanged.emit(self.elemlist_cbb.currentText())
@@ -491,6 +518,19 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
             QMessageBox.information(self, "Export Lattice File",
                     f"Export FLAME lattice file to {filename}.",
                     QMessageBox.Ok, QMessageBox.Ok)
+
+    @pyqtSlot('QString')
+    def on_elem_type_changed(self, dtype: str) -> None:
+        """Element type selection is changed.
+        """
+        # 1. Refresh element name list combobox
+        # 2. Set element list combobox with the first item
+        self.elem_name_cbb.currentTextChanged.disconnect()
+        self.elem_name_cbb.clear()
+        self.elem_name_cbb.addItems([i.name for i in self.__mp.get_elements(type=dtype)])
+        self.elem_name_cbb.setCurrentIndex(0)
+        self.elem_name_cbb.currentTextChanged.connect(self.on_elem_name_changed)
+        self.elem_name_cbb.currentTextChanged.emit(self.elem_name_cbb.currentText())
 
 
 if __name__ == "__main__":
