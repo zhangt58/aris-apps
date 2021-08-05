@@ -76,35 +76,7 @@
        <widget class="QComboBox" name="field_name_cbb"/>
       </item>
       <item>
-       <widget class="QLabel" name="label_12">
-        <property name="text">
-         <string>Current Setting</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="live_cset_lineEdit">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_13">
-        <property name="text">
-         <string>Readback</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="live_rd_lineEdit">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="elem_info_btn">
+       <widget class="QToolButton" name="elem_probe_btn">
         <property name="toolTip">
          <string>Click to see the details of selected device.</string>
         </property>
@@ -208,7 +180,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="target_elem_info_btn">
+           <widget class="QToolButton" name="target_elem_probe_btn">
             <property name="toolTip">
              <string>Click to see the details of selected device.</string>
             </property>
