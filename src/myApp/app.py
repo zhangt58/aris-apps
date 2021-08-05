@@ -30,7 +30,7 @@ from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
 from phantasy_ui import milli_sleep
 from phantasy_ui import get_save_filename
-from phantasy_ui.widgets import ElementWidget
+from phantasy_ui.widgets import ProbeWidget
 from phantasy_ui.widgets import LatticeWidget
 from phantasy_apps.allison_scanner.data import draw_beam_ellipse_with_params
 
@@ -92,12 +92,12 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.last_bs = None
         self.fm = None
 
-        # ElementWidget for selected element and target element
-        self._element_widget = None
-        self._target_elem_widget = None
+        # Dict of ProbeWidget for selected element and target element
+        self._probe_widgets_dict = {}
+
         # element query
-        self.elem_info_btn.clicked.connect(self.on_query_elem_info)
-        self.target_elem_info_btn.clicked.connect(self.on_query_target_elem_info)
+        self.elem_probe_btn.clicked.connect(self.on_probe_elem)
+        self.target_elem_probe_btn.clicked.connect(self.on_probe_target_elem)
 
         # lattice load window
         self.lattice_load_window = None
@@ -174,10 +174,6 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # 1. Update current cset and rd values, initialize new cset.
         self.fld_selected = self.elem_selected.get_field(fname)
         cset = self.fld_selected.current_setting()
-        rd = self.fld_selected.value
-        self.live_cset_lineEdit.setText(f"{cset:.3f}")
-        self.live_rd_lineEdit.setText(f"{rd:.3f}")
-
         self.new_cset_dsbox.valueChanged.disconnect()
         try:
             self.new_cset_dsbox.setValue(cset)
@@ -198,8 +194,6 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
         self.elem_selected = self.__mp.get_elements(name=name)[0]
         # milli_sleep(500)
-        self._element_widget = ElementWidget(self.elem_selected)
-        #
         self.field_name_cbb.currentTextChanged.disconnect()
         self.field_name_cbb.clear()
         self.field_name_cbb.addItems(self.elem_selected.fields)
@@ -333,7 +327,6 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """Get beam state result after the selected element from FLAME model.
         """
         elem = self.__lat[ename]
-        self._target_elem_widget = ElementWidget(elem)
         self.family_lineEdit.setText(elem.family)
         self.pos_lineEdit.setText(f"{elem.sb + self.__z0:.3f} m")
         r, _ = self.fm.run(monitor=[ename])
@@ -350,22 +343,30 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         m.set_model()
 
     @pyqtSlot()
-    def on_query_elem_info(self):
+    def on_probe_elem(self):
         """Pop up dialog for selected element for info query.
         """
-        if self._element_widget is None:
-            return
-        self._element_widget.show()
-        self._element_widget.raise_()
+        elem = self.elem_selected
+        fname = self.fld_selected.name
+        self.__probe_element(elem, fname)
 
     @pyqtSlot()
-    def on_query_target_elem_info(self):
+    def on_probe_target_elem(self):
         """Pop up dialog for selected target element for info query.
         """
-        if self._target_elem_widget is None:
-            return
-        self._target_elem_widget.show()
-        self._target_elem_widget.raise_()
+        elem = self.__lat[self.elemlist_cbb.currentText()]
+        self.__probe_element(elem)
+
+    def __probe_element(self, elem, fname=None):
+        ename = elem.name
+        if ename not in self._probe_widgets_dict:
+            w = ProbeWidget(element=elem, detached=False)
+            self._probe_widgets_dict[ename] = w
+        w = self._probe_widgets_dict[ename]
+        if fname is not None:
+            w.set_field(fname)
+        w.show()
+        w.raise_()
 
     @pyqtSlot('QString')
     def on_xlimit_changed(self, s):
