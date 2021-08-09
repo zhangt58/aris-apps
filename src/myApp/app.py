@@ -14,6 +14,7 @@ Show the available templates:
 >>> makeBasePyQtApp -l
 """
 import sys
+import time
 from functools import partial
 
 from PyQt5.QtCore import pyqtSignal
@@ -101,6 +102,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # initial vars for FLAME model
         self.fm = None
         self.updater = None # simulator
+        self._update_delt = 1.0 # second
 
         # Dict of ProbeWidget for selected element and target element
         self._probe_widgets_dict = {}
@@ -510,8 +512,30 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
     def onAutoUpdateModel(self, toggled):
         """Auto update simulation.
         """
-        print("Update model at 1 Hz.")
-        self._sim_is_running()
+        if toggled:
+            self._stop_auto_update = False
+            self.start_auto_updater()
+        else:
+            self.stop_auto_updater()
+
+    def stop_auto_updater(self):
+        self._stop_auto_update = True
+
+    def start_auto_updater(self):
+        if self._stop_auto_update:
+            return
+        self.updater_n = DAQT(daq_func=partial(self.update_single,
+                              self.__lat, self.elemlist_cbb.currentText(), self._update_delt),
+                              daq_seq=range(1))
+        self.updater_n.daqStarted.connect(partial(self.set_widgets_status, "START", True))
+        self.updater_n.resultsReady.connect(self.on_updater_results_ready)
+        self.updater_n.finished.connect(partial(self.set_widgets_status, "STOP", True))
+        self.updater_n.finished.connect(self.start_auto_updater)
+        self.updater_n.start()
+
+    @pyqtSlot(float)
+    def on_update_rate(self, x):
+        self._update_delt = 1.0 / x # second
 
     def _sim_is_running(self):
         try:
@@ -528,18 +552,25 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         if self._sim_is_running():
             return
         self.updater = DAQT(daq_func=partial(self.update_single,
-                            self.__lat, self.elemlist_cbb.currentText()),
+                            self.__lat, self.elemlist_cbb.currentText(), 0),
                             daq_seq=range(1))
-        self.updater.daqStarted.connect(partial(self.set_widgets_status, "START"))
+        self.updater.daqStarted.connect(partial(self.set_widgets_status, "START", False))
         self.updater.resultsReady.connect(self.on_updater_results_ready)
-        self.updater.finished.connect(partial(self.set_widgets_status, "STOP"))
+        self.updater.finished.connect(partial(self.set_widgets_status, "STOP", False))
         self.updater.start()
 
-    def update_single(self, lat, target_ename, iiter):
+    def update_single(self, lat, target_ename, delt, iiter):
+        t0 = time.time()
         lat.sync_settings()
         _, fm = lat.run()
         results, _ = fm.run(monitor='all')
         r, _ = fm.run(monitor=[target_ename])
+        if delt > 0:
+            dt = time.time() - t0
+            if delt - dt > 0:
+                time.sleep(delt - dt)
+            else:
+                print(f"Update rate is: {1.0 / dt:.1f} Hz")
         return results, r, fm
 
     def on_updater_results_ready(self, res):
@@ -572,9 +603,13 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         params_y = dict(zip(TWISS_KEYS_Y, vals_y))
         self.data_updated2.emit(params_x, params_y)
 
-    def set_widgets_status(self, status):
-        olist1 = (self.actionUpdate, self.actionAuto_Update, )
-        olist2 = ()
+    def set_widgets_status(self, status, auto_update=False):
+        if not auto_update:
+            olist1 = (self.actionUpdate, self.actionAuto_Update, )
+            olist2 = ()
+        else:
+            olist1 = (self.actionUpdate, self.update_rate_dsbox, )
+            olist2 = ()
         if status != "START":
             [o.setEnabled(True) for o in olist1]
             [o.setEnabled(False) for o in olist2]
