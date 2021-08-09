@@ -90,6 +90,17 @@ class Ui_MainWindow(object):
         self.new_cset_dsbox.setSingleStep(0.1)
         self.new_cset_dsbox.setObjectName("new_cset_dsbox")
         self.horizontalLayout.addWidget(self.new_cset_dsbox)
+        self.label_12 = QtWidgets.QLabel(self.centralwidget)
+        self.label_12.setObjectName("label_12")
+        self.horizontalLayout.addWidget(self.label_12)
+        self.update_rate_dsbox = QtWidgets.QDoubleSpinBox(self.centralwidget)
+        self.update_rate_dsbox.setPrefix("")
+        self.update_rate_dsbox.setDecimals(1)
+        self.update_rate_dsbox.setMinimum(0.1)
+        self.update_rate_dsbox.setMaximum(10.0)
+        self.update_rate_dsbox.setProperty("value", 1.0)
+        self.update_rate_dsbox.setObjectName("update_rate_dsbox")
+        self.horizontalLayout.addWidget(self.update_rate_dsbox)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName("tabWidget")
@@ -478,6 +489,8 @@ class Ui_MainWindow(object):
         self.actionAuto_Update.toggled['bool'].connect(
             MainWindow.onAutoUpdateModel)
         self.actionUpdate.triggered.connect(MainWindow.onUpdateModel)
+        self.update_rate_dsbox.valueChanged['double'].connect(
+            MainWindow.on_update_rate)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -491,6 +504,8 @@ class Ui_MainWindow(object):
                        "Click to see the details of selected device."))
         self.elem_probe_btn.setText(_translate("MainWindow", "info"))
         self.label_2.setText(_translate("MainWindow", "Proposed Setting"))
+        self.label_12.setText(_translate("MainWindow", "Update Rate"))
+        self.update_rate_dsbox.setSuffix(_translate("MainWindow", " Hz"))
         self.label_3.setText(_translate("MainWindow", "Show results after"))
         self.target_elem_probe_btn.setToolTip(
             _translate("MainWindow",

@@ -143,6 +143,35 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Update Rate</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="update_rate_dsbox">
+        <property name="prefix">
+         <string/>
+        </property>
+        <property name="suffix">
+         <string> Hz</string>
+        </property>
+        <property name="decimals">
+         <number>1</number>
+        </property>
+        <property name="minimum">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>10.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item row="0" column="0">
@@ -1102,6 +1131,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>update_rate_dsbox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_update_rate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1686</x>
+     <y>884</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1730</x>
+     <y>858</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAbout()</slot>
@@ -1113,5 +1158,6 @@
   <slot>onExportLatfile()</slot>
   <slot>onUpdateModel()</slot>
   <slot>onAutoUpdateModel()</slot>
+  <slot>on_update_rate()</slot>
  </slots>
 </ui>
