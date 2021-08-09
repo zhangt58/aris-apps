@@ -43,7 +43,7 @@ class Ui_MainWindow(object):
         self.elem_name_cbb = QtWidgets.QComboBox(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.elem_name_cbb.sizePolicy().hasHeightForWidth())
@@ -423,6 +423,19 @@ class Ui_MainWindow(object):
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionExport_Lattice.setIcon(icon4)
         self.actionExport_Lattice.setObjectName("actionExport_Lattice")
+        self.actionUpdate = QtWidgets.QAction(MainWindow)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icons/refresh.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionUpdate.setIcon(icon5)
+        self.actionUpdate.setObjectName("actionUpdate")
+        self.actionAuto_Update = QtWidgets.QAction(MainWindow)
+        self.actionAuto_Update.setCheckable(True)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/icons/auto-refresh.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.actionAuto_Update.setIcon(icon6)
+        self.actionAuto_Update.setObjectName("actionAuto_Update")
         self.menu_Help.addAction(self.actionContents)
         self.menu_Help.addSeparator()
         self.menu_Help.addAction(self.action_About)
@@ -431,6 +444,8 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menu_Help.menuAction())
         self.toolBar.addAction(self.actionLoad_Lattice)
         self.toolBar.addAction(self.actionExport_Lattice)
+        self.toolBar.addAction(self.actionUpdate)
+        self.toolBar.addAction(self.actionAuto_Update)
         self.toolBar.addAction(self.actionE_xit)
 
         self.retranslateUi(MainWindow)
@@ -460,6 +475,9 @@ class Ui_MainWindow(object):
             self.trajectory_layout_plot.setXLimitMin)
         self.actionLoad_Lattice.triggered.connect(MainWindow.onLoadLattice)
         self.actionExport_Lattice.triggered.connect(MainWindow.onExportLatfile)
+        self.actionAuto_Update.toggled['bool'].connect(
+            MainWindow.onAutoUpdateModel)
+        self.actionUpdate.triggered.connect(MainWindow.onUpdateModel)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -539,6 +557,8 @@ class Ui_MainWindow(object):
         self.actionExport_Lattice.setToolTip(
             _translate("MainWindow",
                        "Export physics model to a FLAME lattice file."))
+        self.actionUpdate.setText(_translate("MainWindow", "Update"))
+        self.actionAuto_Update.setText(_translate("MainWindow", "Auto Update"))
 
 
 from mpl4qt.widgets.mplbasewidget import MatplotlibBaseWidget

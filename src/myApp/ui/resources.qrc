@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>refresh.png</file>
+    <file>auto-refresh.png</file>
     <file>export.png</file>
     <file>exit.png</file>
     <file>load_lattice.png</file>

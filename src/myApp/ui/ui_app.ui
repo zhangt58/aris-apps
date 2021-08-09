@@ -54,7 +54,7 @@
        <widget class="QComboBox" name="elem_name_cbb">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>1</horstretch>
+          <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
@@ -712,6 +712,8 @@
    </attribute>
    <addaction name="actionLoad_Lattice"/>
    <addaction name="actionExport_Lattice"/>
+   <addaction name="actionUpdate"/>
+   <addaction name="actionAuto_Update"/>
    <addaction name="actionE_xit"/>
   </widget>
   <action name="action_About">
@@ -772,6 +774,27 @@
    </property>
    <property name="toolTip">
     <string>Export physics model to a FLAME lattice file.</string>
+   </property>
+  </action>
+  <action name="actionUpdate">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Update</string>
+   </property>
+  </action>
+  <action name="actionAuto_Update">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/auto-refresh.png</normaloff>:/icons/auto-refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Update</string>
    </property>
   </action>
  </widget>
@@ -1047,6 +1070,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAuto_Update</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAutoUpdateModel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>866</x>
+     <y>456</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionUpdate</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onUpdateModel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>866</x>
+     <y>456</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAbout()</slot>
@@ -1056,5 +1111,7 @@
   <slot>on_ellipse_size_changed()</slot>
   <slot>onLoadLattice()</slot>
   <slot>onExportLatfile()</slot>
+  <slot>onUpdateModel()</slot>
+  <slot>onAutoUpdateModel()</slot>
  </slots>
 </ui>
