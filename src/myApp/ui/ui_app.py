@@ -24,6 +24,18 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName("gridLayout")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label_13 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_13.setFont(font)
+        self.label_13.setObjectName("label_13")
+        self.horizontalLayout.addWidget(self.label_13)
+        self.line_2 = QtWidgets.QFrame(self.centralwidget)
+        self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.horizontalLayout.addWidget(self.line_2)
         self.label_15 = QtWidgets.QLabel(self.centralwidget)
         self.label_15.setObjectName("label_15")
         self.horizontalLayout.addWidget(self.label_15)
@@ -41,8 +53,9 @@ class Ui_MainWindow(object):
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
         self.elem_name_cbb = QtWidgets.QComboBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.MinimumExpanding,
+            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
@@ -111,6 +124,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_3 = QtWidgets.QLabel(self.ellipse_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_2.addWidget(self.label_3)
         self.elemlist_cbb = QtWidgets.QComboBox(self.ellipse_tab)
@@ -496,8 +513,10 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label_13.setText(
+            _translate("MainWindow", "Select device to control"))
         self.label_15.setText(_translate("MainWindow", "Device Type"))
-        self.label.setText(_translate("MainWindow", "Name List"))
+        self.label.setText(_translate("MainWindow", "Name"))
         self.label_14.setText(_translate("MainWindow", "Field"))
         self.elem_probe_btn.setToolTip(
             _translate("MainWindow",
@@ -505,12 +524,18 @@ class Ui_MainWindow(object):
         self.elem_probe_btn.setText(_translate("MainWindow", "info"))
         self.label_2.setText(_translate("MainWindow", "Proposed Setting"))
         self.label_12.setText(_translate("MainWindow", "Update Rate"))
+        self.update_rate_dsbox.setToolTip(
+            _translate("MainWindow", "Figure updating rate."))
         self.update_rate_dsbox.setSuffix(_translate("MainWindow", " Hz"))
         self.label_3.setText(_translate("MainWindow", "Show results after"))
         self.target_elem_probe_btn.setToolTip(
             _translate("MainWindow",
                        "Click to see the details of selected device."))
         self.target_elem_probe_btn.setText(_translate("MainWindow", "info"))
+        self.pos_lineEdit.setToolTip(
+            _translate("MainWindow", "Element position in meter."))
+        self.family_lineEdit.setToolTip(
+            _translate("MainWindow", "Element device type."))
         self.x_ellipse_plot.setFigureXlabel(_translate("MainWindow", "X (mm)"))
         self.x_ellipse_plot.setFigureYlabel(
             _translate("MainWindow", "X\' (mrad)"))
@@ -522,12 +547,16 @@ class Ui_MainWindow(object):
         self.xlim_x1_lineEdit.setText(_translate("MainWindow", "0"))
         self.label_6.setText(_translate("MainWindow", "To"))
         self.xlim_x2_lineEdit.setText(_translate("MainWindow", "1"))
+        self.auto_xlim_btn.setToolTip(
+            _translate("MainWindow", "Auto set X axis limit."))
         self.auto_xlim_btn.setText(_translate("MainWindow", "Auto"))
         self.label_7.setText(_translate("MainWindow", "Y Limit:"))
         self.label_8.setText(_translate("MainWindow", "From"))
         self.ylim_y1_lineEdit.setText(_translate("MainWindow", "0"))
         self.label_9.setText(_translate("MainWindow", "To"))
         self.ylim_y2_lineEdit.setText(_translate("MainWindow", "1"))
+        self.auto_ylim_btn.setToolTip(
+            _translate("MainWindow", "Auto set Y axis limit."))
         self.auto_ylim_btn.setText(_translate("MainWindow", "Auto"))
         self.grid_on_chkbox.setText(_translate("MainWindow", "Grid"))
         self.mticks_on_chkbox.setText(_translate("MainWindow", "Minor Ticks"))
@@ -573,7 +602,11 @@ class Ui_MainWindow(object):
             _translate("MainWindow",
                        "Export physics model to a FLAME lattice file."))
         self.actionUpdate.setText(_translate("MainWindow", "Update"))
+        self.actionUpdate.setToolTip(
+            _translate("MainWindow", "Update simulation and plots."))
         self.actionAuto_Update.setText(_translate("MainWindow", "Auto Update"))
+        self.actionAuto_Update.setToolTip(
+            _translate("MainWindow", "Auto Update simulation and plots."))
 
 
 from mpl4qt.widgets.mplbasewidget import MatplotlibBaseWidget
