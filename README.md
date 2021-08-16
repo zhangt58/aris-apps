@@ -1,4 +1,4 @@
-# ARIS-VA-Ellipse
+# Online Model App
 
 This is a high-level physics application (HLA) built upon ``phantasy`` framework.
 The EPICS controls environment is provided by ARIS virtual accelerator (VA)
