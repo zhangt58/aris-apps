@@ -7,8 +7,8 @@
 from setuptools import setup
 
 
-PKG_NAME = "aris"
-EXE_NAME = "beam_ellipse"
+PKG_NAME = "aris-apps"
+EXE_NAME = "online_model"
 
 
 install_requires = []
