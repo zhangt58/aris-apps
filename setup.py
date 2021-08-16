@@ -32,6 +32,7 @@ setup(
     version='1.0.0',
     description='Physics online simulator with FRIB built upon PHANTASY framework',
     long_description=readme(),
+    long_description_content_type='text/markdown',
     license=read_license(),
     packages=[f'{PKG_NAME}.myapp',
               f'{PKG_NAME}.myapp.ui',
