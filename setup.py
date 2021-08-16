@@ -26,7 +26,7 @@ def readme():
 
 setup(
     name=f'{PKG_NAME}',
-    version='1.0.0',
+    version="1.0.1",
     description='Physics online simulator with FRIB built upon PHANTASY framework',
     long_description=readme(),
     long_description_content_type='text/markdown',

@@ -6,7 +6,7 @@ from phantasy_ui import QApp as QApplication
 
 from .app import MyAppWindow
 
-__version__ = '1.0'
+__version__ = '1.0.1'
 __title__ = 'A New Online Modeling App'
 __authors__ = "Tong Zhang"
 __copyright__ = "(c) 2021, Facility for Rare Isotope beams," \
