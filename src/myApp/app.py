@@ -70,10 +70,20 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
         # app version, title
         self.setAppVersion(version)
-        self.setAppTitle("My App")
+        self.setAppTitle("Online Model App")
 
         # app info in about dialog
-        # self.app_about_info = "About info of My App."
+        self.app_about_info = """
+            <html>
+            <h4>About Online Model App</h4>
+            <p>This app is an online modeling app with FLAME code for accelerator, developed with
+            PHANTASY framework.
+            </p>
+            <p>Copyright (c) 2021 Facility for Rare Isotope Beams and other contributors.</p>
+            </html>
+        """.format(self.getAppVersion())
+
+        # UI
 
         # UI
         self.setupUi(self)
@@ -142,7 +152,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.tight_layout_on_chkbox.toggled.connect(self.on_tightlayout_enabled)
 
         # preload default machine/segment
-        self.__preload_lattice(DEFAULT_MACHINE, DEFAULT_SEGMENT)
+        # self.__preload_lattice(DEFAULT_MACHINE, DEFAULT_SEGMENT)
 
     def __preload_lattice(self, mach, segm):
         self.actionLoad_Lattice.triggered.emit()
