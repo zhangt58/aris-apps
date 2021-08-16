@@ -29,8 +29,8 @@ def read_license():
 
 setup(
     name=f'{PKG_NAME}',
-    version='0.1.0',
-    description='My app created with phantasy framework',
+    version='1.0.0',
+    description='Physics online simulator with FRIB built upon PHANTASY framework',
     long_description=readme(),
     license=read_license(),
     packages=[f'{PKG_NAME}.myapp',
