@@ -17,13 +17,13 @@ Terminal.
 ```shell
 # the working directory is /tmp
 $ makeBasePyQtApp --app aris-va-ellipse --template AppWindow
-What's the name of this package? (default: mypkg) aris
-What's the name of the app, also the command to run it? (default: myApp) beam_ellipse
+What's the name of this package? (default: mypkg) aris_apps
+What's the name of the app, also the command to run it? (default: myApp) online_model
 Generating aris-va-ellipse with template AppWindow...
 Successfully made an base app at '/tmp/aris-va-ellipse'.
 What to do next:
 > Install package: cd /tmp/aris-va-ellipse; make deploy
-> Run app by executing beam_ellipse
+> Run app by executing online_model
 > Edit .ui file with 'frib_designer', and the .py files.
 > Update the package: cd /tmp/aris-va-ellipse; make redeploy
 > Happy Coding!
@@ -36,7 +36,7 @@ export PHANTASY_CONFIG_DIR=$HOME/phantasy-machines
 ```
 Start VA from Terminal:
 ```shell
-phytool flame-vastart --mach ARIS --subm F1
+phytool flame-vastart --mach ARIS_VA --subm F1
 ```
 
 ## Communicate with ARIS VA
@@ -45,7 +45,7 @@ Use ``phantasy`` to control the VA in an interactively way in Python terminal.
 from phantasy import MachinePortal
 
 # Instantiate the portal of the machine
-mp = MachinePortal("ARIS", "F1")
+mp = MachinePortal("ARIS_VA", "F1")
 
 # Find the device by type, see the doc of mp.get_elements()
 # first quad could be found by:
@@ -63,12 +63,12 @@ quad0.B2 = 10
 1. Edit .ui file in ``frib_designer``, which is a command tool from package ``phantasy_ui``;
 2. Convert .ui files to .py files by executing `make` in the ui folder;
 3. In the project root folder, type `make redeploy` to update the package and execute the command
-   (i.e. ``beam_ellipse``) to run the app, or just type `make run`;
-4. Uninstall the package by: ``pip uninstall <pkg_name>`` (for this case, pkg_name is `aris`),
+   (i.e. ``online_model``) to run the app, or just type `make run`;
+4. Uninstall the package by: ``pip uninstall <pkg_name>`` (for this case, pkg_name is `aris_apps`),
    or type `make uninstall`.
 
 ## Note
-If the command ``beam_ellipse`` cannot be found, you'll have to update ``PATH`` env, i.e.
+If the command ``online_model`` cannot be found, you'll have to update ``PATH`` env, i.e.
 ```shell
 echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc
 ```

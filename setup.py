@@ -7,7 +7,7 @@
 from setuptools import setup
 
 
-PKG_NAME = "aris-apps"
+PKG_NAME = "aris_apps"
 EXE_NAME = "online_model"
 
 

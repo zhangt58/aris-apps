@@ -10,7 +10,7 @@ deploy: build
 	python3 -m pip install dist/*.whl --upgrade --user
 
 uninstall:
-	cd $(HOME) && python3 -m pip uninstall aris -y
+	cd $(HOME) && python3 -m pip uninstall aris-apps -y
 
 run: redeploy
-	beam_ellipse
+	online_model
