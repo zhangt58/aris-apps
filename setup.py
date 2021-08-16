@@ -23,9 +23,6 @@ def readme():
     with open('README.md', 'r') as f:
         return f.read()
 
-def read_license():
-    with open('LICENSE') as f:
-        return f.read()
 
 setup(
     name=f'{PKG_NAME}',
@@ -33,7 +30,7 @@ setup(
     description='Physics online simulator with FRIB built upon PHANTASY framework',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    license=read_license(),
+    license="GPL-2+",
     packages=[f'{PKG_NAME}.myapp',
               f'{PKG_NAME}.myapp.ui',
               f'{PKG_NAME}'
