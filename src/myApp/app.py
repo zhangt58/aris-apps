@@ -27,11 +27,13 @@ from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
 
 from mpl4qt.widgets import MatplotlibBaseWidget
+from flame_utils import BeamState
 
 from phantasy import MachinePortal
 from phantasy_ui import BaseAppForm
 from phantasy_ui import delayed_exec
 from phantasy_ui import get_save_filename
+from phantasy_ui.widgets import BeamStateWidget
 from phantasy_ui.widgets import ProbeWidget
 from phantasy_ui.widgets import LatticeWidget
 from phantasy_ui.widgets import DataAcquisitionThread as DAQT
@@ -64,6 +66,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
     data_updated1 = pyqtSignal(tuple)
     # data updated 2: dict of Twiss X, dict of Twiss Y
     data_updated2 = pyqtSignal(dict, dict)
+
+    # beam state updated, beamstate
+    bs_updated = pyqtSignal(BeamState)
 
     def __init__(self, version, **kws):
         super(self.__class__, self).__init__()
@@ -125,6 +130,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.lattice_load_window = None
         self.__mp = None
         self.__lat = None
+
+        # beam state widget
+        self._bs_widget = BeamStateWidget(None, None, None)
+        self.bs_updated.connect(self._bs_widget.bs_updated)
 
         # update layout drawings
         self.update_layout.connect(self.draw_layout)
@@ -600,6 +609,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
                     QMessageBox.Ok, QMessageBox.Ok)
         else:
             self.__update_twiss_params(r)
+            # update beam state info
+            self._bs_widget.ename = self.elemlist_cbb.currentText()
+            self.bs_updated.emit(r[0][-1])
 
     def __update_twiss_params(self, r):
         s = r[0][-1]
@@ -626,6 +638,12 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         else:
             [o.setEnabled(False) for o in olist1]
             [o.setEnabled(True) for o in olist2]
+
+    @pyqtSlot()
+    def on_show_beamstate(self):
+        """Show beam state details.
+        """
+        self._bs_widget.show()
 
 
 if __name__ == "__main__":
