@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>list-bs.png</file>
     <file>refresh.png</file>
     <file>auto-refresh.png</file>
     <file>export.png</file>

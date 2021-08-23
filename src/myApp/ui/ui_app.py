@@ -157,6 +157,15 @@ class Ui_MainWindow(object):
         self.family_lineEdit.setReadOnly(True)
         self.family_lineEdit.setObjectName("family_lineEdit")
         self.horizontalLayout_2.addWidget(self.family_lineEdit)
+        self.show_bs_btn = QtWidgets.QToolButton(self.ellipse_tab)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/list-bs.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.show_bs_btn.setIcon(icon2)
+        self.show_bs_btn.setIconSize(QtCore.QSize(30, 30))
+        self.show_bs_btn.setAutoRaise(True)
+        self.show_bs_btn.setObjectName("show_bs_btn")
+        self.horizontalLayout_2.addWidget(self.show_bs_btn)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.scrollArea = QtWidgets.QScrollArea(self.ellipse_tab)
         self.scrollArea.setWidgetResizable(True)
@@ -432,37 +441,37 @@ class Ui_MainWindow(object):
         self.actionAbout_Qt = QtWidgets.QAction(MainWindow)
         self.actionAbout_Qt.setObjectName("actionAbout_Qt")
         self.actionE_xit = QtWidgets.QAction(MainWindow)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/icons/exit.png"), QtGui.QIcon.Normal,
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/icons/exit.png"), QtGui.QIcon.Normal,
                         QtGui.QIcon.Off)
-        self.actionE_xit.setIcon(icon2)
+        self.actionE_xit.setIcon(icon3)
         self.actionE_xit.setObjectName("actionE_xit")
         self.actionContents = QtWidgets.QAction(MainWindow)
         self.actionContents.setObjectName("actionContents")
         self.actionLoad_Lattice = QtWidgets.QAction(MainWindow)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/load_lattice.png"),
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icons/load_lattice.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionLoad_Lattice.setIcon(icon3)
+        self.actionLoad_Lattice.setIcon(icon4)
         self.actionLoad_Lattice.setObjectName("actionLoad_Lattice")
         self.actionExport_Lattice = QtWidgets.QAction(MainWindow)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icons/export.png"),
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icons/export.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionExport_Lattice.setIcon(icon4)
+        self.actionExport_Lattice.setIcon(icon5)
         self.actionExport_Lattice.setObjectName("actionExport_Lattice")
         self.actionUpdate = QtWidgets.QAction(MainWindow)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/refresh.png"),
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/icons/refresh.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionUpdate.setIcon(icon5)
+        self.actionUpdate.setIcon(icon6)
         self.actionUpdate.setObjectName("actionUpdate")
         self.actionAuto_Update = QtWidgets.QAction(MainWindow)
         self.actionAuto_Update.setCheckable(True)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/auto-refresh.png"),
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons/auto-refresh.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionAuto_Update.setIcon(icon6)
+        self.actionAuto_Update.setIcon(icon7)
         self.actionAuto_Update.setObjectName("actionAuto_Update")
         self.menu_Help.addAction(self.actionContents)
         self.menu_Help.addSeparator()
@@ -508,6 +517,7 @@ class Ui_MainWindow(object):
         self.actionUpdate.triggered.connect(MainWindow.onUpdateModel)
         self.update_rate_dsbox.valueChanged['double'].connect(
             MainWindow.on_update_rate)
+        self.show_bs_btn.clicked.connect(MainWindow.on_show_beamstate)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -536,6 +546,9 @@ class Ui_MainWindow(object):
             _translate("MainWindow", "Element position in meter."))
         self.family_lineEdit.setToolTip(
             _translate("MainWindow", "Element device type."))
+        self.show_bs_btn.setToolTip(
+            _translate("MainWindow", "Show details for beam state."))
+        self.show_bs_btn.setText(_translate("MainWindow", "bs"))
         self.x_ellipse_plot.setFigureXlabel(_translate("MainWindow", "X (mm)"))
         self.x_ellipse_plot.setFigureYlabel(
             _translate("MainWindow", "X\' (mrad)"))

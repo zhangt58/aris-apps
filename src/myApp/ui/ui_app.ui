@@ -280,6 +280,29 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QToolButton" name="show_bs_btn">
+            <property name="toolTip">
+             <string>Show details for beam state.</string>
+            </property>
+            <property name="text">
+             <string>bs</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/list-bs.png</normaloff>:/icons/list-bs.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -1194,6 +1217,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>show_bs_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_show_beamstate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1689</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1727</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAbout()</slot>
@@ -1206,5 +1245,6 @@
   <slot>onUpdateModel()</slot>
   <slot>onAutoUpdateModel()</slot>
   <slot>on_update_rate()</slot>
+  <slot>on_show_beamstate()</slot>
  </slots>
 </ui>
