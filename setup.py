@@ -42,4 +42,5 @@ setup(
     },
     entry_points=set_entry_points(),
     install_requires=install_requires,
+    include_package_data=True,
 )
