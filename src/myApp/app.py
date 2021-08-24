@@ -50,6 +50,13 @@ VALID_ELEMENT_TYPES = ("QUAD", "BEND")
 DEFAULT_ELEMENT_TYPE = "QUAD"
 DEFAULT_FIELD_NAME = "I" # B2
 
+HTML_TEMPLATE = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head><meta name="qrichtext" content="1" /><style type="text/css">
+p, li {{ white-space: pre-wrap; }}
+</style></head><body style=" font-family:'Cantarell'; font-size:12pt; font-weight:400; font-style:normal;">
+<p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><img src="{0}" /></p></body></html>
+"""
+
 
 class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
@@ -61,6 +68,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
     # update layout drawings
     update_layout = pyqtSignal()
+
+    # show layout drawing (engineer drawings)
+    show_layout_drawing = pyqtSignal('QString')
 
     # data updated 1: (s, x0, y0, rx, ry)
     data_updated1 = pyqtSignal(tuple)
@@ -89,8 +99,6 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """.format(self.getAppVersion())
 
         # UI
-
-        # UI
         self.setupUi(self)
         self.postInitUi()
 
@@ -100,6 +108,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
     def _post_init(self):
         """Initialize UI, user customized code put here.
         """
+        self.ENG_DRAWING_MAP = {
+            'aris': ':/imgs/ARIS-layout.png',
+        }
         #
         self.elem_type_cbb.currentTextChanged.connect(self.on_elem_type_changed)
         self.elem_name_cbb.currentTextChanged.connect(self.on_elem_name_changed)
@@ -137,6 +148,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
         # update layout drawings
         self.update_layout.connect(self.draw_layout)
+        self.show_layout_drawing.connect(self.on_show_layout_drawings)
         # lattice changed
         self.lattice_changed.connect(self.on_lattice_changed)
 
@@ -463,6 +475,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.__lat = mp.work_lattice_conf
         self.__z0 = self.__lat.layout.z
 
+        #
+        if self.__mp.last_machine_name in ('ARIS', 'ARIS_VA',):
+            self.show_layout_drawing.emit('aris')
+
         # update layout drawings
         self.update_layout.emit()
 
@@ -644,6 +660,13 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """Show beam state details.
         """
         self._bs_widget.show()
+
+    @pyqtSlot('QString')
+    def on_show_layout_drawings(self, name):
+        """Show engineering drawing.
+        """
+        self.eng_drawing_browser.setHtml(HTML_TEMPLATE.format(self.ENG_DRAWING_MAP[name]))
+
 
 
 if __name__ == "__main__":
