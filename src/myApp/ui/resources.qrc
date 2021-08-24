@@ -9,4 +9,7 @@
     <file>info.png</file>
     <file>default.png</file>
   </qresource>
+  <qresource prefix="imgs">
+    <file>ARIS-layout.png</file>
+  </qresource>
 </RCC>
