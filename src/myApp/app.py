@@ -127,6 +127,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
         # initial vars for FLAME model
         self.fm = None
+        self._src_conf = None # initial beam source condition, dict
         self.updater = None # simulator
         self._update_delt = 1.0 # second
 
@@ -145,6 +146,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # beam state widget
         self._bs_widget = BeamStateWidget(None, None, None)
         self.bs_updated.connect(self._bs_widget.bs_updated)
+        self._bs_widget.beam_source_updated[dict].connect(self.on_beam_source_updated)
 
         # update layout drawings
         self.update_layout.connect(self.draw_layout)
@@ -210,6 +212,19 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         o.setLineID(1)  # Y
         o.setLineColor(QColor('#FF0000'))
         o.setLineLabel("$y_0$")
+
+    @pyqtSlot(dict)
+    def on_beam_source_updated(self, src_conf):
+        """Initial beam condition is updated.
+        """
+        # update and run model
+        # update dataviz
+        self._src_conf = src_conf
+        if self.actionAuto_Update.isChecked():
+            self.actionAuto_Update.setChecked(False)
+            delayed_exec(lambda:self.actionAuto_Update.setChecked(True), 200)
+        else:
+            self.actionUpdate.triggered.emit()
 
     @pyqtSlot('QString')
     def on_fname_changed(self, fname: str) -> None:
@@ -509,6 +524,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.elemlist_cbb.setCurrentIndex(self.elemlist_cbb.count() - 1)
         self.elemlist_cbb.currentTextChanged.emit(self.elemlist_cbb.currentText())
 
+        # auto xyscale (ellipse drawing)
+        delayed_exec(self.actionUpdate.triggered.emit, 2000)
+        delayed_exec(self.auto_limits, 3000)
+
     @pyqtSlot()
     def onExportLatfile(self):
         """Export FLAME lattice file from the model.
@@ -560,7 +579,8 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         if self._stop_auto_update:
             return
         self.updater_n = DAQT(daq_func=partial(self.update_single,
-                              self.__lat, self.elemlist_cbb.currentText(), self._update_delt),
+                              self.__lat, self.elemlist_cbb.currentText(), self._update_delt,
+                              self._src_conf),
                               daq_seq=range(1))
         self.updater_n.daqStarted.connect(partial(self.set_widgets_status, "START", True))
         self.updater_n.resultsReady.connect(self.on_updater_results_ready)
@@ -587,17 +607,19 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         if self._sim_is_running():
             return
         self.updater = DAQT(daq_func=partial(self.update_single,
-                            self.__lat, self.elemlist_cbb.currentText(), 0),
+                            self.__lat, self.elemlist_cbb.currentText(), 0,
+                            self._src_conf),
                             daq_seq=range(1))
         self.updater.daqStarted.connect(partial(self.set_widgets_status, "START", False))
         self.updater.resultsReady.connect(self.on_updater_results_ready)
         self.updater.finished.connect(partial(self.set_widgets_status, "STOP", False))
         self.updater.start()
 
-    def update_single(self, lat, target_ename, delt, iiter):
+    def update_single(self, lat, target_ename, delt, src_conf, iiter):
+        # src_conf: initial beam source configuration.
         t0 = time.time()
         lat.sync_settings()
-        _, fm = lat.run()
+        _, fm = lat.run(src_conf)
         results, _ = fm.run(monitor='all')
         r, _ = fm.run(monitor=[target_ename])
         if delt > 0:
