@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>select-all.png</file>
+    <file>invert-selection.png</file>
     <file>list-bs.png</file>
     <file>refresh.png</file>
     <file>auto-refresh.png</file>

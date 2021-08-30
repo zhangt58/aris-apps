@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1734</width>
-    <height>913</height>
+    <width>1978</width>
+    <height>1111</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,179 +27,7 @@
    </size>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label_13">
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Select device to control</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="Line" name="line_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_15">
-        <property name="text">
-         <string>Device Type</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="elem_type_cbb"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Name</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="elem_name_cbb">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <family>Monospace</family>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_14">
-        <property name="text">
-         <string>Field</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="field_name_cbb"/>
-      </item>
-      <item>
-       <widget class="QToolButton" name="elem_probe_btn">
-        <property name="toolTip">
-         <string>Click to see the details of selected device.</string>
-        </property>
-        <property name="text">
-         <string>info</string>
-        </property>
-        <property name="icon">
-         <iconset resource="resources.qrc">
-          <normaloff>:/icons/info.png</normaloff>:/icons/info.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="autoRaise">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Proposed Setting</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="new_cset_dsbox">
-        <property name="suffix">
-         <string/>
-        </property>
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-100.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>100.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_12">
-        <property name="text">
-         <string>Update Rate</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="update_rate_dsbox">
-        <property name="toolTip">
-         <string>Figure updating rate.</string>
-        </property>
-        <property name="prefix">
-         <string/>
-        </property>
-        <property name="suffix">
-         <string> Hz</string>
-        </property>
-        <property name="decimals">
-         <number>1</number>
-        </property>
-        <property name="minimum">
-         <double>0.100000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>10.000000000000000</double>
-        </property>
-        <property name="value">
-         <double>1.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
+   <layout class="QGridLayout" name="gridLayout_4">
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
@@ -321,8 +149,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1684</width>
-             <height>538</height>
+             <width>1928</width>
+             <height>736</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_2">
@@ -609,63 +437,173 @@
        <attribute name="title">
         <string>Beam Envelope</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QSplitter" name="envelope_plot_splitter">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QSplitter" name="splitter_3">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="MatplotlibCurveWidget" name="envelope_plot">
-           <property name="figureAutoScale">
-            <bool>true</bool>
+          <widget class="QSplitter" name="envelope_plot_splitter">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="figureXlabel">
-            <string>s [m]</string>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
-           <property name="figureYlabel">
-            <string>Envelope Size [mm]</string>
-           </property>
-           <property name="figureXYlabelFont">
-            <font>
-             <family>sans-serif</family>
-             <pointsize>14</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="figureTitleFont">
-            <font>
-             <family>sans-serif</family>
-             <pointsize>14</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="figureLegendToggle" stdset="0">
-            <bool>true</bool>
-           </property>
-           <property name="figureXYticksFont">
-            <font>
-             <family>sans-serif</family>
-             <pointsize>12</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
+           <widget class="MatplotlibCurveWidget" name="envelope_plot">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>1</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="figureAutoScale">
+             <bool>true</bool>
+            </property>
+            <property name="figureXlabel">
+             <string>s [m]</string>
+            </property>
+            <property name="figureYlabel">
+             <string>Envelope Size [mm]</string>
+            </property>
+            <property name="figureXYlabelFont">
+             <font>
+              <family>sans-serif</family>
+              <pointsize>14</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="figureTitleFont">
+             <font>
+              <family>sans-serif</family>
+              <pointsize>14</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="figureLegendToggle" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="figureXYticksFont">
+             <font>
+              <family>sans-serif</family>
+              <pointsize>12</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+           </widget>
+           <widget class="MatplotlibBaseWidget" name="envelope_layout_plot">
+            <property name="figureAutoScale">
+             <bool>true</bool>
+            </property>
+            <property name="figureXTicksVisible">
+             <bool>false</bool>
+            </property>
+            <property name="figureToolbarToggle" stdset="0">
+             <bool>false</bool>
+            </property>
+           </widget>
           </widget>
-          <widget class="MatplotlibBaseWidget" name="envelope_layout_plot">
-           <property name="figureAutoScale">
-            <bool>true</bool>
+          <widget class="QGroupBox" name="envelope_diag_gbox">
+           <property name="title">
+            <string>Diagnostics</string>
            </property>
-           <property name="figureXTicksVisible">
-            <bool>false</bool>
-           </property>
-           <property name="figureToolbarToggle" stdset="0">
-            <bool>false</bool>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_16">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Select Devices</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QToolButton" name="envelope_diag_select_all_btn">
+                <property name="text">
+                 <string>All</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/icons/select-all.png</normaloff>:/icons/select-all.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="envelope_diag_invert_selection_btn">
+                <property name="text">
+                 <string>Invert</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/icons/invert-selection.png</normaloff>:/icons/invert-selection.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="envelope_diag_choose_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Choose</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTreeView" name="envelope_diags_treeView"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
@@ -675,60 +613,182 @@
        <attribute name="title">
         <string>Beam Trajectory</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QSplitter" name="trajectory_plot_splitter">
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QSplitter" name="splitter_5">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="MatplotlibCurveWidget" name="trajectory_plot">
-           <property name="figureAutoScale">
-            <bool>true</bool>
+          <widget class="QSplitter" name="trajectory_plot_splitter">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="figureXlabel">
-            <string>s [m]</string>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
-           <property name="figureYlabel">
-            <string>Centroid Position [mm]</string>
-           </property>
-           <property name="figureXYlabelFont">
-            <font>
-             <family>sans-serif</family>
-             <pointsize>14</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="figureTitleFont">
-            <font>
-             <family>sans-serif</family>
-             <pointsize>14</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="figureLegendToggle" stdset="0">
-            <bool>true</bool>
-           </property>
-           <property name="figureXYticksFont">
-            <font>
-             <family>sans-serif</family>
-             <pointsize>12</pointsize>
-             <weight>50</weight>
-             <italic>false</italic>
-             <bold>false</bold>
-            </font>
-           </property>
+           <widget class="MatplotlibCurveWidget" name="trajectory_plot">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>1</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="figureAutoScale">
+             <bool>true</bool>
+            </property>
+            <property name="figureXlabel">
+             <string>s [m]</string>
+            </property>
+            <property name="figureYlabel">
+             <string>Centroid Position [mm]</string>
+            </property>
+            <property name="figureXYlabelFont">
+             <font>
+              <family>sans-serif</family>
+              <pointsize>14</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="figureTitleFont">
+             <font>
+              <family>sans-serif</family>
+              <pointsize>14</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="figureLegendToggle" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="figureXYticksFont">
+             <font>
+              <family>sans-serif</family>
+              <pointsize>12</pointsize>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
+             </font>
+            </property>
+           </widget>
+           <widget class="MatplotlibBaseWidget" name="trajectory_layout_plot">
+            <property name="figureAutoScale">
+             <bool>true</bool>
+            </property>
+            <property name="figureToolbarToggle" stdset="0">
+             <bool>false</bool>
+            </property>
+           </widget>
           </widget>
-          <widget class="MatplotlibBaseWidget" name="trajectory_layout_plot">
-           <property name="figureAutoScale">
-            <bool>true</bool>
+          <widget class="QGroupBox" name="trajectory_diag_gbox">
+           <property name="title">
+            <string>Diagnostics</string>
            </property>
-           <property name="figureToolbarToggle" stdset="0">
-            <bool>false</bool>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QLabel" name="label_17">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Select Devices</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QToolButton" name="trajectory_diag_select_all_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>All</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/icons/select-all.png</normaloff>:/icons/select-all.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="trajectory_diag_invert_selection_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Invert</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="resources.qrc">
+                  <normaloff>:/icons/invert-selection.png</normaloff>:/icons/invert-selection.png</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="trajectory_diag_choose_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Choose</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>32</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QTreeView" name="trajectory_diags_treeView"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
@@ -790,6 +850,178 @@
       </widget>
      </widget>
     </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label_13">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Select device to control</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_15">
+        <property name="text">
+         <string>Device Type</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="elem_type_cbb"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="elem_name_cbb">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>Field</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="field_name_cbb"/>
+      </item>
+      <item>
+       <widget class="QToolButton" name="elem_probe_btn">
+        <property name="toolTip">
+         <string>Click to see the details of selected device.</string>
+        </property>
+        <property name="text">
+         <string>info</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/icons/info.png</normaloff>:/icons/info.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Proposed Setting</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="new_cset_dsbox">
+        <property name="suffix">
+         <string/>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-100.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>100.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Update Rate</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="update_rate_dsbox">
+        <property name="toolTip">
+         <string>Figure updating rate.</string>
+        </property>
+        <property name="prefix">
+         <string/>
+        </property>
+        <property name="suffix">
+         <string> Hz</string>
+        </property>
+        <property name="decimals">
+         <number>1</number>
+        </property>
+        <property name="minimum">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>10.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -797,7 +1029,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1734</width>
+     <width>1978</width>
      <height>30</height>
     </rect>
    </property>
@@ -889,6 +1121,9 @@
    </property>
    <property name="toolTip">
     <string>Load machine and segment.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
    </property>
   </action>
   <action name="actionExport_Lattice">
@@ -1002,11 +1237,11 @@
    <slot>on_auto_xlim()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>863</x>
-     <y>795</y>
+     <x>679</x>
+     <y>939</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1730</x>
+     <x>1364</x>
      <y>738</y>
     </hint>
    </hints>
@@ -1018,11 +1253,11 @@
    <slot>on_auto_ylim()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1708</x>
-     <y>795</y>
+     <x>1339</x>
+     <y>939</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1729</x>
+     <x>1364</x>
      <y>776</y>
     </hint>
    </hints>
@@ -1035,10 +1270,10 @@
    <hints>
     <hint type="sourcelabel">
      <x>517</x>
-     <y>837</y>
+     <y>983</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1731</x>
+     <x>1364</x>
      <y>694</y>
     </hint>
    </hints>
@@ -1086,8 +1321,8 @@
      <y>375</y>
     </hint>
     <hint type="destinationlabel">
-     <x>602</x>
-     <y>563</y>
+     <x>615</x>
+     <y>984</y>
     </hint>
    </hints>
   </connection>
@@ -1134,8 +1369,8 @@
      <y>460</y>
     </hint>
     <hint type="destinationlabel">
-     <x>351</x>
-     <y>539</y>
+     <x>364</x>
+     <y>984</y>
     </hint>
    </hints>
   </connection>
@@ -1146,12 +1381,12 @@
    <slot>setXLimitMax(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>795</x>
-     <y>418</y>
+     <x>742</x>
+     <y>579</y>
     </hint>
     <hint type="destinationlabel">
-     <x>797</x>
-     <y>569</y>
+     <x>742</x>
+     <y>984</y>
     </hint>
    </hints>
   </connection>
@@ -1162,12 +1397,12 @@
    <slot>setXLimitMin(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>964</x>
-     <y>370</y>
+     <x>742</x>
+     <y>531</y>
     </hint>
     <hint type="destinationlabel">
-     <x>975</x>
-     <y>549</y>
+     <x>742</x>
+     <y>984</y>
     </hint>
    </hints>
   </connection>
@@ -1242,11 +1477,11 @@
    <slot>on_update_rate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1686</x>
-     <y>884</y>
+     <x>1352</x>
+     <y>1040</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1730</x>
+     <x>1364</x>
      <y>858</y>
     </hint>
    </hints>
@@ -1258,11 +1493,11 @@
    <slot>on_show_beamstate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1689</x>
-     <y>189</y>
+     <x>1339</x>
+     <y>209</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1727</x>
+     <x>1364</x>
      <y>183</y>
     </hint>
    </hints>

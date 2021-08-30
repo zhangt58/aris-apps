@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1734, 913)
+        MainWindow.resize(1978, 1111)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/default.png"),
                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -21,101 +21,8 @@ class Ui_MainWindow(object):
         MainWindow.setIconSize(QtCore.QSize(36, 36))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName("gridLayout")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.label_13 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_13.setFont(font)
-        self.label_13.setObjectName("label_13")
-        self.horizontalLayout.addWidget(self.label_13)
-        self.line_2 = QtWidgets.QFrame(self.centralwidget)
-        self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_2.setObjectName("line_2")
-        self.horizontalLayout.addWidget(self.line_2)
-        self.label_15 = QtWidgets.QLabel(self.centralwidget)
-        self.label_15.setObjectName("label_15")
-        self.horizontalLayout.addWidget(self.label_15)
-        self.elem_type_cbb = QtWidgets.QComboBox(self.centralwidget)
-        self.elem_type_cbb.setObjectName("elem_type_cbb")
-        self.horizontalLayout.addWidget(self.elem_type_cbb)
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setObjectName("label")
-        self.horizontalLayout.addWidget(self.label)
-        self.elem_name_cbb = QtWidgets.QComboBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.MinimumExpanding,
-            QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.elem_name_cbb.sizePolicy().hasHeightForWidth())
-        self.elem_name_cbb.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Monospace")
-        self.elem_name_cbb.setFont(font)
-        self.elem_name_cbb.setObjectName("elem_name_cbb")
-        self.horizontalLayout.addWidget(self.elem_name_cbb)
-        self.label_14 = QtWidgets.QLabel(self.centralwidget)
-        self.label_14.setObjectName("label_14")
-        self.horizontalLayout.addWidget(self.label_14)
-        self.field_name_cbb = QtWidgets.QComboBox(self.centralwidget)
-        self.field_name_cbb.setObjectName("field_name_cbb")
-        self.horizontalLayout.addWidget(self.field_name_cbb)
-        self.elem_probe_btn = QtWidgets.QToolButton(self.centralwidget)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/icons/info.png"), QtGui.QIcon.Normal,
-                        QtGui.QIcon.Off)
-        self.elem_probe_btn.setIcon(icon1)
-        self.elem_probe_btn.setIconSize(QtCore.QSize(30, 30))
-        self.elem_probe_btn.setAutoRaise(True)
-        self.elem_probe_btn.setObjectName("elem_probe_btn")
-        self.horizontalLayout.addWidget(self.elem_probe_btn)
-        spacerItem = QtWidgets.QSpacerItem(40, 20,
-                                           QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
-        self.label_2.setObjectName("label_2")
-        self.horizontalLayout.addWidget(self.label_2)
-        self.new_cset_dsbox = QtWidgets.QDoubleSpinBox(self.centralwidget)
-        self.new_cset_dsbox.setSuffix("")
-        self.new_cset_dsbox.setDecimals(3)
-        self.new_cset_dsbox.setMinimum(-100.0)
-        self.new_cset_dsbox.setMaximum(100.0)
-        self.new_cset_dsbox.setSingleStep(0.1)
-        self.new_cset_dsbox.setObjectName("new_cset_dsbox")
-        self.horizontalLayout.addWidget(self.new_cset_dsbox)
-        self.label_12 = QtWidgets.QLabel(self.centralwidget)
-        self.label_12.setObjectName("label_12")
-        self.horizontalLayout.addWidget(self.label_12)
-        self.update_rate_dsbox = QtWidgets.QDoubleSpinBox(self.centralwidget)
-        self.update_rate_dsbox.setPrefix("")
-        self.update_rate_dsbox.setDecimals(1)
-        self.update_rate_dsbox.setMinimum(0.1)
-        self.update_rate_dsbox.setMaximum(10.0)
-        self.update_rate_dsbox.setProperty("value", 1.0)
-        self.update_rate_dsbox.setObjectName("update_rate_dsbox")
-        self.horizontalLayout.addWidget(self.update_rate_dsbox)
-        self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout_4.setObjectName("gridLayout_4")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setEnabled(True)
         self.tabWidget.setObjectName("tabWidget")
@@ -146,6 +53,9 @@ class Ui_MainWindow(object):
         self.elemlist_cbb.setObjectName("elemlist_cbb")
         self.horizontalLayout_2.addWidget(self.elemlist_cbb)
         self.target_elem_probe_btn = QtWidgets.QToolButton(self.ellipse_tab)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/info.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
         self.target_elem_probe_btn.setIcon(icon1)
         self.target_elem_probe_btn.setIconSize(QtCore.QSize(30, 30))
         self.target_elem_probe_btn.setAutoRaise(True)
@@ -173,7 +83,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.ellipse_area = QtWidgets.QWidget()
-        self.ellipse_area.setGeometry(QtCore.QRect(0, 0, 1684, 538))
+        self.ellipse_area.setGeometry(QtCore.QRect(0, 0, 1928, 736))
         self.ellipse_area.setObjectName("ellipse_area")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.ellipse_area)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -322,20 +232,37 @@ class Ui_MainWindow(object):
         self.label_11 = QtWidgets.QLabel(self.ellipse_tab)
         self.label_11.setObjectName("label_11")
         self.horizontalLayout_6.addWidget(self.label_11)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20,
-                                            QtWidgets.QSizePolicy.Expanding,
-                                            QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_6.addItem(spacerItem1)
+        spacerItem = QtWidgets.QSpacerItem(40, 20,
+                                           QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem)
         self.verticalLayout.addLayout(self.horizontalLayout_6)
         self.tabWidget.addTab(self.ellipse_tab, "")
         self.envelope_tab = QtWidgets.QWidget()
         self.envelope_tab.setObjectName("envelope_tab")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.envelope_tab)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.envelope_plot_splitter = QtWidgets.QSplitter(self.envelope_tab)
+        self.gridLayout = QtWidgets.QGridLayout(self.envelope_tab)
+        self.gridLayout.setObjectName("gridLayout")
+        self.splitter_3 = QtWidgets.QSplitter(self.envelope_tab)
+        self.splitter_3.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter_3.setObjectName("splitter_3")
+        self.envelope_plot_splitter = QtWidgets.QSplitter(self.splitter_3)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.envelope_plot_splitter.sizePolicy().hasHeightForWidth())
+        self.envelope_plot_splitter.setSizePolicy(sizePolicy)
         self.envelope_plot_splitter.setOrientation(QtCore.Qt.Vertical)
         self.envelope_plot_splitter.setObjectName("envelope_plot_splitter")
         self.envelope_plot = MatplotlibCurveWidget(self.envelope_plot_splitter)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setHeightForWidth(
+            self.envelope_plot.sizePolicy().hasHeightForWidth())
+        self.envelope_plot.setSizePolicy(sizePolicy)
         self.envelope_plot.setFigureAutoScale(True)
         font = QtGui.QFont()
         font.setFamily("sans-serif")
@@ -366,17 +293,93 @@ class Ui_MainWindow(object):
         self.envelope_layout_plot.setFigureXTicksVisible(False)
         self.envelope_layout_plot.setProperty("figureToolbarToggle", False)
         self.envelope_layout_plot.setObjectName("envelope_layout_plot")
-        self.verticalLayout_3.addWidget(self.envelope_plot_splitter)
+        self.envelope_diag_gbox = QtWidgets.QGroupBox(self.splitter_3)
+        self.envelope_diag_gbox.setObjectName("envelope_diag_gbox")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.envelope_diag_gbox)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.label_16 = QtWidgets.QLabel(self.envelope_diag_gbox)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_16.sizePolicy().hasHeightForWidth())
+        self.label_16.setSizePolicy(sizePolicy)
+        self.label_16.setObjectName("label_16")
+        self.horizontalLayout_3.addWidget(self.label_16)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem1)
+        self.envelope_diag_select_all_btn = QtWidgets.QToolButton(
+            self.envelope_diag_gbox)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/icons/select-all.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.envelope_diag_select_all_btn.setIcon(icon3)
+        self.envelope_diag_select_all_btn.setIconSize(QtCore.QSize(32, 32))
+        self.envelope_diag_select_all_btn.setObjectName(
+            "envelope_diag_select_all_btn")
+        self.horizontalLayout_3.addWidget(self.envelope_diag_select_all_btn)
+        self.envelope_diag_invert_selection_btn = QtWidgets.QToolButton(
+            self.envelope_diag_gbox)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icons/invert-selection.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.envelope_diag_invert_selection_btn.setIcon(icon4)
+        self.envelope_diag_invert_selection_btn.setIconSize(
+            QtCore.QSize(32, 32))
+        self.envelope_diag_invert_selection_btn.setObjectName(
+            "envelope_diag_invert_selection_btn")
+        self.horizontalLayout_3.addWidget(
+            self.envelope_diag_invert_selection_btn)
+        self.envelope_diag_choose_btn = QtWidgets.QPushButton(
+            self.envelope_diag_gbox)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.envelope_diag_choose_btn.sizePolicy().hasHeightForWidth())
+        self.envelope_diag_choose_btn.setSizePolicy(sizePolicy)
+        self.envelope_diag_choose_btn.setIconSize(QtCore.QSize(32, 32))
+        self.envelope_diag_choose_btn.setObjectName("envelope_diag_choose_btn")
+        self.horizontalLayout_3.addWidget(self.envelope_diag_choose_btn)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+        self.envelope_diags_treeView = QtWidgets.QTreeView(
+            self.envelope_diag_gbox)
+        self.envelope_diags_treeView.setObjectName("envelope_diags_treeView")
+        self.verticalLayout_3.addWidget(self.envelope_diags_treeView)
+        self.gridLayout.addWidget(self.splitter_3, 0, 0, 1, 1)
         self.tabWidget.addTab(self.envelope_tab, "")
         self.tajectory_tab = QtWidgets.QWidget()
         self.tajectory_tab.setObjectName("tajectory_tab")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.tajectory_tab)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.trajectory_plot_splitter = QtWidgets.QSplitter(self.tajectory_tab)
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.tajectory_tab)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.splitter_5 = QtWidgets.QSplitter(self.tajectory_tab)
+        self.splitter_5.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter_5.setObjectName("splitter_5")
+        self.trajectory_plot_splitter = QtWidgets.QSplitter(self.splitter_5)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.trajectory_plot_splitter.sizePolicy().hasHeightForWidth())
+        self.trajectory_plot_splitter.setSizePolicy(sizePolicy)
         self.trajectory_plot_splitter.setOrientation(QtCore.Qt.Vertical)
         self.trajectory_plot_splitter.setObjectName("trajectory_plot_splitter")
         self.trajectory_plot = MatplotlibCurveWidget(
             self.trajectory_plot_splitter)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setHeightForWidth(
+            self.trajectory_plot.sizePolicy().hasHeightForWidth())
+        self.trajectory_plot.setSizePolicy(sizePolicy)
         self.trajectory_plot.setFigureAutoScale(True)
         font = QtGui.QFont()
         font.setFamily("sans-serif")
@@ -406,7 +409,77 @@ class Ui_MainWindow(object):
         self.trajectory_layout_plot.setFigureAutoScale(True)
         self.trajectory_layout_plot.setProperty("figureToolbarToggle", False)
         self.trajectory_layout_plot.setObjectName("trajectory_layout_plot")
-        self.verticalLayout_2.addWidget(self.trajectory_plot_splitter)
+        self.trajectory_diag_gbox = QtWidgets.QGroupBox(self.splitter_5)
+        self.trajectory_diag_gbox.setObjectName("trajectory_diag_gbox")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(
+            self.trajectory_diag_gbox)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+        self.label_17 = QtWidgets.QLabel(self.trajectory_diag_gbox)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_17.sizePolicy().hasHeightForWidth())
+        self.label_17.setSizePolicy(sizePolicy)
+        self.label_17.setObjectName("label_17")
+        self.horizontalLayout_8.addWidget(self.label_17)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_8.addItem(spacerItem2)
+        self.trajectory_diag_select_all_btn = QtWidgets.QToolButton(
+            self.trajectory_diag_gbox)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.trajectory_diag_select_all_btn.
+                                     sizePolicy().hasHeightForWidth())
+        self.trajectory_diag_select_all_btn.setSizePolicy(sizePolicy)
+        self.trajectory_diag_select_all_btn.setIcon(icon3)
+        self.trajectory_diag_select_all_btn.setIconSize(QtCore.QSize(32, 32))
+        self.trajectory_diag_select_all_btn.setObjectName(
+            "trajectory_diag_select_all_btn")
+        self.horizontalLayout_8.addWidget(self.trajectory_diag_select_all_btn)
+        self.trajectory_diag_invert_selection_btn = QtWidgets.QToolButton(
+            self.trajectory_diag_gbox)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.trajectory_diag_invert_selection_btn.
+                                     sizePolicy().hasHeightForWidth())
+        self.trajectory_diag_invert_selection_btn.setSizePolicy(sizePolicy)
+        self.trajectory_diag_invert_selection_btn.setIcon(icon4)
+        self.trajectory_diag_invert_selection_btn.setIconSize(
+            QtCore.QSize(32, 32))
+        self.trajectory_diag_invert_selection_btn.setObjectName(
+            "trajectory_diag_invert_selection_btn")
+        self.horizontalLayout_8.addWidget(
+            self.trajectory_diag_invert_selection_btn)
+        self.trajectory_diag_choose_btn = QtWidgets.QPushButton(
+            self.trajectory_diag_gbox)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.trajectory_diag_choose_btn.sizePolicy().hasHeightForWidth())
+        self.trajectory_diag_choose_btn.setSizePolicy(sizePolicy)
+        self.trajectory_diag_choose_btn.setIconSize(QtCore.QSize(32, 32))
+        self.trajectory_diag_choose_btn.setObjectName(
+            "trajectory_diag_choose_btn")
+        self.horizontalLayout_8.addWidget(self.trajectory_diag_choose_btn)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_8)
+        self.trajectory_diags_treeView = QtWidgets.QTreeView(
+            self.trajectory_diag_gbox)
+        self.trajectory_diags_treeView.setObjectName(
+            "trajectory_diags_treeView")
+        self.verticalLayout_2.addWidget(self.trajectory_diags_treeView)
+        self.gridLayout_5.addWidget(self.splitter_5, 0, 0, 1, 1)
         self.tabWidget.addTab(self.tajectory_tab, "")
         self.layout_tab = QtWidgets.QWidget()
         self.layout_tab.setObjectName("layout_tab")
@@ -431,10 +504,100 @@ class Ui_MainWindow(object):
         self.eng_drawing_browser.setObjectName("eng_drawing_browser")
         self.gridLayout_3.addWidget(self.eng_drawing_browser, 0, 0, 1, 1)
         self.tabWidget.addTab(self.eng_drawing_tab, "")
-        self.gridLayout.addWidget(self.tabWidget, 0, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.tabWidget, 0, 0, 1, 1)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label_13 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_13.setFont(font)
+        self.label_13.setObjectName("label_13")
+        self.horizontalLayout.addWidget(self.label_13)
+        self.line_2 = QtWidgets.QFrame(self.centralwidget)
+        self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.horizontalLayout.addWidget(self.line_2)
+        self.label_15 = QtWidgets.QLabel(self.centralwidget)
+        self.label_15.setObjectName("label_15")
+        self.horizontalLayout.addWidget(self.label_15)
+        self.elem_type_cbb = QtWidgets.QComboBox(self.centralwidget)
+        self.elem_type_cbb.setObjectName("elem_type_cbb")
+        self.horizontalLayout.addWidget(self.elem_type_cbb)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        self.label.setObjectName("label")
+        self.horizontalLayout.addWidget(self.label)
+        self.elem_name_cbb = QtWidgets.QComboBox(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.MinimumExpanding,
+            QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.elem_name_cbb.sizePolicy().hasHeightForWidth())
+        self.elem_name_cbb.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Monospace")
+        self.elem_name_cbb.setFont(font)
+        self.elem_name_cbb.setObjectName("elem_name_cbb")
+        self.horizontalLayout.addWidget(self.elem_name_cbb)
+        self.label_14 = QtWidgets.QLabel(self.centralwidget)
+        self.label_14.setObjectName("label_14")
+        self.horizontalLayout.addWidget(self.label_14)
+        self.field_name_cbb = QtWidgets.QComboBox(self.centralwidget)
+        self.field_name_cbb.setObjectName("field_name_cbb")
+        self.horizontalLayout.addWidget(self.field_name_cbb)
+        self.elem_probe_btn = QtWidgets.QToolButton(self.centralwidget)
+        self.elem_probe_btn.setIcon(icon1)
+        self.elem_probe_btn.setIconSize(QtCore.QSize(30, 30))
+        self.elem_probe_btn.setAutoRaise(True)
+        self.elem_probe_btn.setObjectName("elem_probe_btn")
+        self.horizontalLayout.addWidget(self.elem_probe_btn)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem3)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy)
+        self.label_2.setObjectName("label_2")
+        self.horizontalLayout.addWidget(self.label_2)
+        self.new_cset_dsbox = QtWidgets.QDoubleSpinBox(self.centralwidget)
+        self.new_cset_dsbox.setSuffix("")
+        self.new_cset_dsbox.setDecimals(3)
+        self.new_cset_dsbox.setMinimum(-100.0)
+        self.new_cset_dsbox.setMaximum(100.0)
+        self.new_cset_dsbox.setSingleStep(0.1)
+        self.new_cset_dsbox.setObjectName("new_cset_dsbox")
+        self.horizontalLayout.addWidget(self.new_cset_dsbox)
+        self.label_12 = QtWidgets.QLabel(self.centralwidget)
+        self.label_12.setObjectName("label_12")
+        self.horizontalLayout.addWidget(self.label_12)
+        self.update_rate_dsbox = QtWidgets.QDoubleSpinBox(self.centralwidget)
+        self.update_rate_dsbox.setPrefix("")
+        self.update_rate_dsbox.setDecimals(1)
+        self.update_rate_dsbox.setMinimum(0.1)
+        self.update_rate_dsbox.setMaximum(10.0)
+        self.update_rate_dsbox.setProperty("value", 1.0)
+        self.update_rate_dsbox.setObjectName("update_rate_dsbox")
+        self.horizontalLayout.addWidget(self.update_rate_dsbox)
+        self.gridLayout_4.addLayout(self.horizontalLayout, 1, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1734, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1978, 30))
         self.menubar.setObjectName("menubar")
         self.menu_File = QtWidgets.QMenu(self.menubar)
         self.menu_File.setObjectName("menu_File")
@@ -454,37 +617,37 @@ class Ui_MainWindow(object):
         self.actionAbout_Qt = QtWidgets.QAction(MainWindow)
         self.actionAbout_Qt.setObjectName("actionAbout_Qt")
         self.actionE_xit = QtWidgets.QAction(MainWindow)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/exit.png"), QtGui.QIcon.Normal,
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icons/exit.png"), QtGui.QIcon.Normal,
                         QtGui.QIcon.Off)
-        self.actionE_xit.setIcon(icon3)
+        self.actionE_xit.setIcon(icon5)
         self.actionE_xit.setObjectName("actionE_xit")
         self.actionContents = QtWidgets.QAction(MainWindow)
         self.actionContents.setObjectName("actionContents")
         self.actionLoad_Lattice = QtWidgets.QAction(MainWindow)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icons/load_lattice.png"),
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/icons/load_lattice.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionLoad_Lattice.setIcon(icon4)
+        self.actionLoad_Lattice.setIcon(icon6)
         self.actionLoad_Lattice.setObjectName("actionLoad_Lattice")
         self.actionExport_Lattice = QtWidgets.QAction(MainWindow)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/export.png"),
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons/export.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionExport_Lattice.setIcon(icon5)
+        self.actionExport_Lattice.setIcon(icon7)
         self.actionExport_Lattice.setObjectName("actionExport_Lattice")
         self.actionUpdate = QtWidgets.QAction(MainWindow)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/icons/refresh.png"),
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(":/icons/refresh.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionUpdate.setIcon(icon6)
+        self.actionUpdate.setIcon(icon8)
         self.actionUpdate.setObjectName("actionUpdate")
         self.actionAuto_Update = QtWidgets.QAction(MainWindow)
         self.actionAuto_Update.setCheckable(True)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/icons/auto-refresh.png"),
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(":/icons/auto-refresh.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.actionAuto_Update.setIcon(icon7)
+        self.actionAuto_Update.setIcon(icon9)
         self.actionAuto_Update.setObjectName("actionAuto_Update")
         self.menu_Help.addAction(self.actionContents)
         self.menu_Help.addSeparator()
@@ -536,20 +699,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_13.setText(
-            _translate("MainWindow", "Select device to control"))
-        self.label_15.setText(_translate("MainWindow", "Device Type"))
-        self.label.setText(_translate("MainWindow", "Name"))
-        self.label_14.setText(_translate("MainWindow", "Field"))
-        self.elem_probe_btn.setToolTip(
-            _translate("MainWindow",
-                       "Click to see the details of selected device."))
-        self.elem_probe_btn.setText(_translate("MainWindow", "info"))
-        self.label_2.setText(_translate("MainWindow", "Proposed Setting"))
-        self.label_12.setText(_translate("MainWindow", "Update Rate"))
-        self.update_rate_dsbox.setToolTip(
-            _translate("MainWindow", "Figure updating rate."))
-        self.update_rate_dsbox.setSuffix(_translate("MainWindow", " Hz"))
         self.label_3.setText(_translate("MainWindow", "Show results after"))
         self.target_elem_probe_btn.setToolTip(
             _translate("MainWindow",
@@ -597,11 +746,29 @@ class Ui_MainWindow(object):
         self.envelope_plot.setFigureXlabel(_translate("MainWindow", "s [m]"))
         self.envelope_plot.setFigureYlabel(
             _translate("MainWindow", "Envelope Size [mm]"))
+        self.envelope_diag_gbox.setTitle(
+            _translate("MainWindow", "Diagnostics"))
+        self.label_16.setText(_translate("MainWindow", "Select Devices"))
+        self.envelope_diag_select_all_btn.setText(
+            _translate("MainWindow", "All"))
+        self.envelope_diag_invert_selection_btn.setText(
+            _translate("MainWindow", "Invert"))
+        self.envelope_diag_choose_btn.setText(
+            _translate("MainWindow", "Choose"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.envelope_tab),
                                   _translate("MainWindow", "Beam Envelope"))
         self.trajectory_plot.setFigureXlabel(_translate("MainWindow", "s [m]"))
         self.trajectory_plot.setFigureYlabel(
             _translate("MainWindow", "Centroid Position [mm]"))
+        self.trajectory_diag_gbox.setTitle(
+            _translate("MainWindow", "Diagnostics"))
+        self.label_17.setText(_translate("MainWindow", "Select Devices"))
+        self.trajectory_diag_select_all_btn.setText(
+            _translate("MainWindow", "All"))
+        self.trajectory_diag_invert_selection_btn.setText(
+            _translate("MainWindow", "Invert"))
+        self.trajectory_diag_choose_btn.setText(
+            _translate("MainWindow", "Choose"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tajectory_tab),
                                   _translate("MainWindow", "Beam Trajectory"))
         self.layout_plot.setFigureAspectRatio(_translate("MainWindow", "20"))
@@ -609,6 +776,20 @@ class Ui_MainWindow(object):
                                   _translate("MainWindow", "Schematic Layout"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.eng_drawing_tab),
                                   _translate("MainWindow", "Drawing"))
+        self.label_13.setText(
+            _translate("MainWindow", "Select device to control"))
+        self.label_15.setText(_translate("MainWindow", "Device Type"))
+        self.label.setText(_translate("MainWindow", "Name"))
+        self.label_14.setText(_translate("MainWindow", "Field"))
+        self.elem_probe_btn.setToolTip(
+            _translate("MainWindow",
+                       "Click to see the details of selected device."))
+        self.elem_probe_btn.setText(_translate("MainWindow", "info"))
+        self.label_2.setText(_translate("MainWindow", "Proposed Setting"))
+        self.label_12.setText(_translate("MainWindow", "Update Rate"))
+        self.update_rate_dsbox.setToolTip(
+            _translate("MainWindow", "Figure updating rate."))
+        self.update_rate_dsbox.setSuffix(_translate("MainWindow", " Hz"))
         self.menu_File.setTitle(_translate("MainWindow", "&File"))
         self.menu_Help.setTitle(_translate("MainWindow", "&Help"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
@@ -624,6 +805,8 @@ class Ui_MainWindow(object):
             _translate("MainWindow", "Load Lattice"))
         self.actionLoad_Lattice.setToolTip(
             _translate("MainWindow", "Load machine and segment."))
+        self.actionLoad_Lattice.setShortcut(
+            _translate("MainWindow", "Ctrl+Shift+L"))
         self.actionExport_Lattice.setText(
             _translate("MainWindow", "Export Lattice File"))
         self.actionExport_Lattice.setToolTip(
