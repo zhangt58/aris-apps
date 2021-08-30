@@ -13,9 +13,12 @@ Show the available templates:
 
 >>> makeBasePyQtApp -l
 """
+import pathlib
 import sys
 import time
+import numpy as np
 from functools import partial
+from collections import OrderedDict
 
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
@@ -34,10 +37,13 @@ from phantasy_ui import BaseAppForm
 from phantasy_ui import delayed_exec
 from phantasy_ui import get_save_filename
 from phantasy_ui.widgets import BeamStateWidget
+from phantasy_ui.widgets import ElementSelectionWidget
 from phantasy_ui.widgets import ProbeWidget
 from phantasy_ui.widgets import LatticeWidget
 from phantasy_ui.widgets import DataAcquisitionThread as DAQT
 from phantasy_apps.allison_scanner.data import draw_beam_ellipse_with_params
+from phantasy_apps.trajectory_viewer.utils import ElementListModel
+from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 
 from .utils import ResultsModel
 from .utils import TWISS_KEYS_X
@@ -56,6 +62,12 @@ p, li {{ white-space: pre-wrap; }}
 </style></head><body style=" font-family:'Cantarell'; font-size:12pt; font-weight:400; font-style:normal;">
 <p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><img src="{0}" /></p></body></html>
 """
+
+DIAG_FLD_MAP = {'envelope': ('sb', 'XRMS', 'YRMS'), 'trajectory': ('sb', 'XCEN', 'YCEN')}
+CURPATH = pathlib.Path(__file__)
+MPL_CONF_PATH = CURPATH.parent.joinpath("config")
+ENVELOPE_MPL_CONF_PATH = MPL_CONF_PATH.joinpath("mpl_settings_envelope.json").resolve()
+TRAJECTORY_MPL_CONF_PATH = MPL_CONF_PATH.joinpath("mpl_settings_trajectory.json").resolve()
 
 
 class MyAppWindow(BaseAppForm, Ui_MainWindow):
@@ -79,6 +91,16 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
     # beam state updated, beamstate
     bs_updated = pyqtSignal(BeamState)
+
+    # selected diag devices changed
+    envelope_diags_changed = pyqtSignal(dict)
+    trajectory_diags_changed = pyqtSignal(dict)
+
+    # diag data updated
+    # s, x0, y0
+    diag_data_updated1 = pyqtSignal(tuple)
+    # s, rx, ry
+    diag_data_updated2 = pyqtSignal(tuple)
 
     def __init__(self, version, **kws):
         super(self.__class__, self).__init__()
@@ -122,6 +144,10 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.data_updated2.connect(self.on_update_data2)
 
         #
+        self.diag_data_updated1.connect(self.on_update_diag_data1)
+        self.diag_data_updated2.connect(self.on_update_diag_data2)
+
+        #
         self._size_factor = self.size_factor_sbox.value()
         self.ellipse_size_factor_changed.connect(self.draw_ellipse)
 
@@ -142,6 +168,8 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self.lattice_load_window = None
         self.__mp = None
         self.__lat = None
+        self._elem_sel_widgets = {}
+        self._diag_elems = {'envelope': [], 'trajectory': []} # list of CaElement
 
         # beam state widget
         self._bs_widget = BeamStateWidget(None, None, None)
@@ -177,6 +205,109 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         # preload default machine/segment
         # self.__preload_lattice(DEFAULT_MACHINE, DEFAULT_SEGMENT)
 
+        # diag, envelope
+        self.envelope_diag_choose_btn.clicked.connect(partial(self.on_select_devices, 'envelope', ['PM', 'VD']))
+        self.envelope_diags_changed.connect(partial(self.on_update_diag_viz, 'envelope'))
+        self.envelope_diag_select_all_btn.clicked.connect(partial(self.on_select_all_elems, "envelope"))
+        self.envelope_diag_invert_selection_btn.clicked.connect(partial(self.on_inverse_current_elem_selection, "envelope"))
+
+        # diag, trajectory
+        self.trajectory_diag_choose_btn.clicked.connect(partial(self.on_select_devices, 'trajectory', ['PM', 'VD', 'BPM']))
+        self.trajectory_diags_changed.connect(partial(self.on_update_diag_viz, 'trajectory'))
+        self.trajectory_diag_select_all_btn.clicked.connect(partial(self.on_select_all_elems, "trajectory"))
+        self.trajectory_diag_invert_selection_btn.clicked.connect(partial(self.on_inverse_current_elem_selection, "trajectory"))
+
+    @pyqtSlot()
+    def on_select_all_elems(self, category):
+        """Select all diags in *category*_diags_treeView.
+        """
+        try:
+            print("Select All {}s".format(category.upper()))
+            model = getattr(self, '{}_diags_treeView'.format(category)).model()
+            model.select_all_items()
+        except AttributeError:
+            QMessageBox.warning(self, "Element Selection",
+                                "Selection error, Choose elements first.",
+                                QMessageBox.Ok)
+
+    @pyqtSlot()
+    def on_inverse_current_elem_selection(self, category):
+        """Inverse current diag selection in *category*_diags_treeView.
+        """
+        try:
+            print("Inverse {} selection".format(category.upper()))
+            model = getattr(self, '{}_diags_treeView'.format(category)).model()
+            model.inverse_current_selection()
+        except AttributeError:
+            QMessageBox.warning(self, "Element Selection",
+                                "Selection error, Choose elements first.",
+                                QMessageBox.Ok)
+
+    @pyqtSlot(dict)
+    def on_update_diag_viz(self, category, d):
+        # update selected diag_elements and dataviz.
+        # print("Selected diag devices:")
+        if d is not None:
+            self._diag_elems[category] = [self.__lat[i] for i in d]
+
+        if len(self._diag_elems[category]) == 0:
+            return
+
+        flds = DIAG_FLD_MAP[category]
+        diag_data = np.asarray(
+                [[getattr(elem, fld) for fld in flds] for elem in self._diag_elems[category]])
+        col1 = diag_data[:, 0] + self.__z0 # s
+        col2 = diag_data[:, 1] * 1e3 # x0 or rx, m -> mm
+        col3 = diag_data[:, 2] * 1e3 # y0 or ry, m -> mm
+        if category == 'trajectory':
+            self.diag_data_updated1.emit((col1, col2, col3))
+        elif category == 'envelope':
+            self.diag_data_updated2.emit((col1, col2, col3))
+
+    @pyqtSlot()
+    def on_select_devices(self, category, dtype_list):
+        """Select devices, category: envelope, trajectory
+        """
+        if self.__mp is None:
+            QMessageBox.warning(self, "Select Element",
+                                "Cannot find loaded lattice, load by clicking 'Load Lattice' or Ctrl+Shift+L.",
+                                QMessageBox.Ok)
+            return
+        w = self._elem_sel_widgets.setdefault(category,
+                                              ElementSelectionWidget(self, self.__mp, dtypes=dtype_list))
+        w.elementsSelected.connect(partial(self.on_update_elems, category))
+        w.show()
+
+    @pyqtSlot(OrderedDict)
+    def on_elem_selection_updated(self, category, d):
+        # mode 'envelope':
+        #   selection (envelope_diags_treeView) is updated
+        #   * trigger the update of self._diags (trigger data viz update (timeout))
+        model = getattr(self, '{}_diags_treeView'.format(category)).model()
+        if category == 'envelope':
+            #
+            print("Diag device selction for envelope is changed...")
+            # emit selected monitors
+            self.envelope_diags_changed.emit(model._selected_elements)
+        elif category == 'trajectory':
+            print("Diag device selction for trajectory is changed...")
+            # emit selected monitors
+            self.trajectory_diags_changed.emit(model._selected_elements)
+
+    @pyqtSlot(list)
+    def on_update_elems(self, category, enames):
+        """Selected element names list updated, mode: 'envelope'/'trajectory'
+        """
+        tv = getattr(self, "{}_diags_treeView".format(category))
+        model = ElementListModel(tv, self.__mp, enames)
+        # list of fields of selected element type
+        model.set_model()
+
+        # selection is changed (elementlistmodel)
+        m = tv.model()
+        m.elementSelected.connect(partial(self.on_elem_selection_updated, category))
+
+
     def __preload_lattice(self, mach, segm):
         self.actionLoad_Lattice.triggered.emit()
         self.lattice_load_window.mach_cbb.setCurrentText(mach)
@@ -194,24 +325,20 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         """
         o = self.envelope_plot
         o.add_curve()
-        o.setLineID(0)  # X
-        o.setLineColor(QColor('#0000FF'))
-        o.setLineLabel("$\sigma_x$")
-        o.setLineID(1)  # Y
-        o.setLineColor(QColor('#FF0000'))
-        o.setLineLabel("$\sigma_y$")
+        o.add_curve()
+        o.add_curve()
+        s = MatplotlibCurveWidgetSettings(str(ENVELOPE_MPL_CONF_PATH))
+        o.apply_mpl_settings(s)
 
     def __init_trajectory_plot(self):
         """Initialize plot area for beam trajectory.
         """
         o = self.trajectory_plot
         o.add_curve()
-        o.setLineID(0)  # X
-        o.setLineColor(QColor('#0000FF'))
-        o.setLineLabel("$x_0$")
-        o.setLineID(1)  # Y
-        o.setLineColor(QColor('#FF0000'))
-        o.setLineLabel("$y_0$")
+        o.add_curve()
+        o.add_curve()
+        s = MatplotlibCurveWidgetSettings(str(TRAJECTORY_MPL_CONF_PATH))
+        o.apply_mpl_settings(s)
 
     @pyqtSlot(dict)
     def on_beam_source_updated(self, src_conf):
@@ -222,9 +349,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         self._src_conf = src_conf
         if self.actionAuto_Update.isChecked():
             self.actionAuto_Update.setChecked(False)
-            delayed_exec(lambda:self.actionAuto_Update.setChecked(True), 200)
-        else:
-            self.actionUpdate.triggered.emit()
+        delayed_exec(self.actionUpdate.triggered.emit, 500)
 
     @pyqtSlot('QString')
     def on_fname_changed(self, fname: str) -> None:
@@ -239,7 +364,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         except TypeError:
             # current_settings('B2') is None --> most likely VA is not running
             QMessageBox.critical(
-                self, "ARIS Beam Ellipse",
+                self, "Online Model App",
                 "Cannot reach process variables, please either start virtual accelerator or ensure Channel Access is permittable.",
                 QMessageBox.Ok, QMessageBox.Ok)
             sys.exit(1)
@@ -270,6 +395,20 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
 
         # update online model (once)
         self.actionUpdate.triggered.emit()
+
+    @pyqtSlot(tuple)
+    def on_update_diag_data1(self, t1):
+        s, x0, y0 = t1
+        for line_id, ucen in zip((2, 3), (x0, y0)):
+            self.trajectory_plot.setLineID(line_id)
+            self.trajectory_plot.update_curve(s, ucen)
+
+    @pyqtSlot(tuple)
+    def on_update_diag_data2(self, t2):
+        s, rx, ry = t2
+        for line_id, urms in zip((2, 3), (rx, ry)):
+            self.envelope_plot.setLineID(line_id)
+            self.envelope_plot.update_curve(s, urms)
 
     @pyqtSlot(tuple)
     def on_update_data1(self, t1):
@@ -361,7 +500,7 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
         elem = self.__lat[ename]
         self.family_lineEdit.setText(elem.family)
         self.pos_lineEdit.setText(f"{elem.sb + self.__z0:.3f} m")
-        self.actionUpdate.triggered.emit()
+        delayed_exec(self.actionUpdate.triggered.emit, 1000)
 
     def _show_results(self, data):
         m = ResultsModel(self.twiss_results_treeView, data)
@@ -650,6 +789,9 @@ class MyAppWindow(BaseAppForm, Ui_MainWindow):
             # update beam state info
             self._bs_widget.ename = self.elemlist_cbb.currentText()
             self.bs_updated.emit(r[0][-1])
+        # diag viz
+        self.on_update_diag_viz('envelope', None)
+        self.on_update_diag_viz('trajectory', None)
 
     def __update_twiss_params(self, r):
         s = r[0][-1]
